@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import Login from './components/Login';
 import {Navbar, Button, Nav} from 'react-bootstrap';
 export default class Homepage extends Component {
     state= {
