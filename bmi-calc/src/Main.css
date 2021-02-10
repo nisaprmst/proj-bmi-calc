@@ -3,11 +3,16 @@
     font-size: small;
     border: none;
 }
-
 .button:hover{
     opacity: 0.8;
     color:black;
 }
+.submit  {
+    color: white;
+    background-color: #326e85;
+    border: none;
+}
+
 
 .text{
     color:black;

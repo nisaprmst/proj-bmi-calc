@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {Navbar, Button, Nav} from 'react-bootstrap';
+import Calculator from './components/Calculator';
 export default class Homepage extends Component {
     state= {
       show:false
@@ -19,6 +20,8 @@ export default class Homepage extends Component {
                 &#160;Sign in With Google</Button>
               </Navbar.Collapse>
             </Navbar>
+            <br/><br/>
+            <Calculator/>
         </div>
       )
     }
