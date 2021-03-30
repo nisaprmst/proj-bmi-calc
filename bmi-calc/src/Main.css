@@ -1,22 +1,94 @@
-.button{
-    color: black;
-    font-size: small;
-    border: none;
+body{
+    font-family: 'Segoe UI';
+    font-weight: bold;
 }
-.button:hover{
-    opacity: 0.8;
-    color:black;
+
+.navbrand {
+    height: 70px;
 }
-.submit  {
+
+.nav-text, .text {
     color: white;
-    background-color: #326e85;
-    border: none;
+    font-weight: bold;
+    font-size: 18px;
 }
 
+.nav-text:hover {
+    color: white;
+    opacity: 0.6;
+}
 
-.text{
-    color:black;
+.title{
+    color: white;
+    font-size: 20px;
+    height: 200px;
+}
 
+.faq-title {
+    background-repeat: no-repeat;
+}
+
+.container {
+    position: relative;
+    text-align: center;
+    color: white;
+    width: 470px;
+}
+
+.top-left {
+    position: absolute;
+    top: 15px;
+    left: 40px;
+    
+  }
+
+.faq-title {
+    height: 200px;
+}
+.faq-q {
+    width: 450px;
+}
+.faq-answer {
+    padding: 5%;
+    margin: 0 25%;
+    background-color: #bfe7d4;
+    color: white;
+}
+.q-bubble {
+    padding-right: 20%;
+}
+
+@media (max-width:1200px){
+    .nav-text, .text {
+        font-size: 10px;
+        padding: 2px 3px;
+        text-align: center;
+    }
+    .navbrand {
+        height: 50px;
+    }
+    .faq-title {
+        height: 150px;
+    }
+
+    .faq-answer {
+        padding: 5%;
+        margin: 0 15%;
+    }
+
+    .top-left {
+        top: 10px;
+        left: 35px;
+    }
+    .container {
+        width: 370px;
+    }
+    .faq-q {
+        width: 350px;
+    }
+    .q-bubble{
+        padding-right: 10%;
+    }
 }
 
 .text:hover{
