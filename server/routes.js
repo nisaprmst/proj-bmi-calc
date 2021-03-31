@@ -5,4 +5,7 @@ module.exports = function(app) {
 
     app.route('/api/index')
         .get(user.index);
+
+    app.route('/api/users')
+        .get(user.getAllUser);
 };
