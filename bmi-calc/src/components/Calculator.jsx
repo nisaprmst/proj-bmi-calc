@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import {Form, Button} from 'react-bootstrap';
+import {Form, Button, Row, Col} from 'react-bootstrap';
 import Result from './Result';
 class Calculator extends Component {
     state = { 
@@ -39,19 +39,33 @@ class Calculator extends Component {
     }
     render() { 
         return ( 
-        <div>
+        <div style={{backgroundColor:"#15533E", width:"600px", margin:"auto", padding:"1% 0"}} >
             <h1 style={{textAlign:"center"}}>Kalkulator BMI</h1>
-            <Form style={{padding:"2% 30%"}}>
-                <Form.Label>Tinggi (cm)</Form.Label>
-                <Form.Control type="number" value={this.state.tinggi} onChange={this.handleTinggi} placeholder="Tinggi" required/>
-                <Form.Label>Berat (kg)</Form.Label>
-                <Form.Control type="number" value={this.state.berat} onChange={this.handleBerat} placeholder="Berat" required/>
+            <Form style={{padding:"5% 10%"}}>
+                <Form.Row >
+                    <Col xs lg={3}>
+                        <Form.Label>Tinggi (cm)</Form.Label>
+                    </Col>
+                    <Col>
+                        <Form.Control type="number" value={this.state.tinggi} onChange={this.handleTinggi} placeholder="Tinggi" required/>
+                    </Col>
+                </Form.Row>
                 <br/>
+                <Form.Row>
+                    <Col xs lg={3}>
+                        <Form.Label>Berat (kg)</Form.Label>
+                    </Col>
+                    <Col>
+                        <Form.Control type="number" value={this.state.berat} onChange={this.handleBerat} placeholder="Berat" required/>
+                    </Col>
+                </Form.Row>
+                <br/><br/>
                 <div style={{textAlign:"center"}}> 
-                    <Button className="submit"  onClick={this.handleSubmit} disabled={this.state.berat == null || this.state.tinggi == null}>
+                    <Button className="hitung-button"  onClick={this.handleSubmit} disabled={this.state.berat == null || this.state.tinggi == null}>
                         Hitung
                     </Button>
                 </div>
+                <img src="https://t3.ftcdn.net/jpg/02/33/24/58/360_F_233245868_j82YuiqdCQLWrDBvc3wO08nQ06bUFS2p.jpg" width="100%" style={{padding:"6% 0"}}/>
                 
             </Form>
             <Result show={this.state.show} result={this.state.result} handleShow={this.handleShow} class={this.state.class} />

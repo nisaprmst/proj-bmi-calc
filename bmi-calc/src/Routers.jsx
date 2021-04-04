@@ -24,7 +24,7 @@ class Routers extends Component {
     render() { 
         return ( 
             <div>
-                <NavBar/>
+                <NavBar show={this.hasLogin}/>
                 <Route exact path="/" component={Homepage}/>
                 <Route path="/login" component={Authentication} />
                 <Route path="/faq" component={Faq}/>
