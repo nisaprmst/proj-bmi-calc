@@ -4,15 +4,70 @@ body{
     color: white;
 }
 
+
 @font-face {
     font-family: NoVirus;
     src: url("./assets/fonts/No\ Virus.otf");
+}
+
+.modal-width{
+    width: 500px;
+}
+.modal {
+    color: black;
+    border-radius: 20px !important;
+    padding: 2%;
+}
+
+.form-box {
+    border-radius: 15px;
+    padding: 6% 2%;
+    font-size: 16px;
+}
+.form-box2 {
+    border-radius: 15px;
+    padding: 12% 5%;
+    font-size: 16px;
 }
 .hitung-button{
     font-size: 20px;
     padding: 1% 15%;
     border-radius: 6px;
 }
+
+.login-button {
+    background-color: #15533E;
+    width: 100%;
+    opacity: 0.85;
+    padding: 3%;
+    border: none;
+    border-radius: 13px;
+    color:white;
+}
+
+.login-button:hover{
+    opacity: 1;
+}
+.login-button:active ,.google-button:active{
+    transform: scale(0.97);
+}
+.google-button{
+    width: 100%;
+    padding: 3%;
+    border-radius: 13px;
+    color:black;
+    background-color: white;
+    border:1px solid #15533E;
+}
+
+.google-button:hover {
+    background-color: whitesmoke;
+}
+
+
+
+
+
 
 .user-button {
     font-size: 30px;

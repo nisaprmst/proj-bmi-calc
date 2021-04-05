@@ -1,10 +1,20 @@
 import { Button, Col, Container, Row } from 'react-bootstrap';
 import React, { Component } from 'react';
+import Login from './Login';
+import SignUp from './Signup';
 
 class Authentication extends Component {
     state = { 
-
+        modalShow: false,
+        modalShow2: false
      }
+
+    setModalShow = () => {
+        this.setState({modalShow:!this.state.modalShow});
+    }
+    setModalShow2 = () => {
+        this.setState({modalShow2:!this.state.modalShow2});
+    }
 
     componentDidMount() {
         document.body.style.backgroundColor = "#15533E"
@@ -25,15 +35,17 @@ class Authentication extends Component {
                     <Container>
                         <Row >
                             <Col>
-                                <Button className="user-button" >Log In</Button>
+                                <Button className="user-button" onClick={() => this.setModalShow()} >Log In</Button>
                             </Col>
                             <Col>
-                                <Button className="user-button">Sign Up</Button>
+                                <Button className="user-button" onClick={() => this.setModalShow2()}>Sign Up</Button>
                             </Col>
                         </Row>
                     </Container>
 
                 </div>
+                <SignUp show={this.state.modalShow2}  onHide={()=>this.setModalShow2()} />
+                <Login show={this.state.modalShow} onHide={()=> this.setModalShow()}/>
             </div>
          );
     }
