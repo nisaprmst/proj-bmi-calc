@@ -8,6 +8,7 @@ import Authentication from "./pages/Authentication";
 import Faq from "./pages/Faq";
 import NavBar from "./components/NavBar";
 import Calc from "./pages/Calc";
+import Posts from "./pages/Posts";
 
 
 
@@ -24,11 +25,12 @@ class Routers extends Component {
     render() { 
         return ( 
             <div>
-                <NavBar show={this.hasLogin}/>
+                <NavBar show={this.state.hasLogin}/>
                 <Route exact path="/" component={Homepage}/>
                 <Route path="/login" component={Authentication} />
                 <Route path="/faq" component={Faq}/>
                 <Route path="/calculator" component={Calc} />
+                <Route path="/deskripsiumum" component={Posts} />
             </div>
          );
     }

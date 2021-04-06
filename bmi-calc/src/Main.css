@@ -10,6 +10,7 @@ body{
     src: url("./assets/fonts/No\ Virus.otf");
 }
 
+
 .modal-width{
     width: 500px;
 }
@@ -17,6 +18,11 @@ body{
     color: black;
     border-radius: 20px !important;
     padding: 2%;
+}
+
+.form-cms {
+    padding: 1%;
+    border-radius: 12px;
 }
 
 .form-box {
@@ -44,11 +50,20 @@ body{
     border-radius: 13px;
     color:white;
 }
+.post-button {
+    background-color: #15533E;
+    opacity: 0.85;
+    padding: 1% 2%;
+    width:20%;
+    border: none;
+    border-radius: 6px;
+    color:white;
+}
 
-.login-button:hover{
+.login-button:hover, .post-button:hover{
     opacity: 1;
 }
-.login-button:active ,.google-button:active{
+.login-button:active ,.google-button:active, .post-button:active{
     transform: scale(0.97);
 }
 .google-button{
