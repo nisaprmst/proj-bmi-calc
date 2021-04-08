@@ -65,8 +65,8 @@ export default function AuthModal(props) {
   const button = 
      (
       <div style={{padding:"2% 0 5% 0", textAlign:"center"}}>
-      <button className="login-button" onClick={postData}>{props.buttonText1}</button> <br/><br/>
-      <div style={{opacity:"0.8"}}>or</div><br/>
+      <button className="login-button" onClick={postData}>{props.buttonText1}</button> <br/>
+      <div style={{opacity:"0.6", padding:"1% 0"}}>or</div>
       <button className="google-button">
         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/1200px-Google_%22G%22_Logo.svg.png" height={18}/>
         &nbsp;&nbsp;	Continue with Google
@@ -88,13 +88,13 @@ export default function AuthModal(props) {
       >
         <Modal.Header  closeButton>
           <Modal.Title id="contained-modal-title-vcenter">
-           <div style={{fontSize:"30px", color:"#15533E",fontWeight:"bold", padding:"5% 0"}}>
+           <div style={{fontSize:"25px", color:"#15533E",fontWeight:"bold", padding:"1% 0"}}>
               {props.title}
            </div>
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <div style={{padding:"4% 0"}}>
+          <div style={{padding:"2% 0 0 0"}}>
             {props.login && 
               <Form onSubmit={handleSubmit}>
                 <Form.Group>

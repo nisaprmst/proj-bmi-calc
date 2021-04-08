@@ -3,7 +3,11 @@ body{
     font-weight: bold;
     color: white;
 }
-
+@font-face {
+    font-family: Champagne;
+    font-weight: bold;
+    src: url("./assets/fonts/Champagne\ &\ Limousines\ Bold.ttf");
+}
 
 @font-face {
     font-family: NoVirus;
@@ -26,13 +30,13 @@ body{
 }
 
 .form-box {
-    border-radius: 15px;
-    padding: 6% 2%;
+    border-radius: 12px;
+    padding: 3% 2%;
     font-size: 16px;
 }
 .form-box2 {
-    border-radius: 15px;
-    padding: 12% 5%;
+    border-radius: 13px;
+    padding: 2% 5%;
     font-size: 16px;
 }
 .hitung-button{
@@ -45,7 +49,7 @@ body{
     background-color: #15533E;
     width: 100%;
     opacity: 0.85;
-    padding: 3%;
+    padding: 2%;
     border: none;
     border-radius: 13px;
     color:white;
@@ -54,7 +58,7 @@ body{
     background-color: #15533E;
     opacity: 0.85;
     padding: 1% 2%;
-    width:20%;
+    width:25%;
     border: none;
     border-radius: 6px;
     color:white;
@@ -68,7 +72,7 @@ body{
 }
 .google-button{
     width: 100%;
-    padding: 3%;
+    padding: 2%;
     border-radius: 13px;
     color:black;
     background-color: white;
@@ -81,11 +85,8 @@ body{
 
 
 
-
-
-
 .user-button {
-    font-size: 30px;
+    font-size: 20px;
     font-weight: bold;
     padding: 1% 20%;
     border-radius: 10px;
@@ -120,9 +121,6 @@ body{
     height: 200px;
 }
 
-.faq-title {
-    background-repeat: no-repeat;
-}
 
 .container {
     position: relative;
@@ -138,11 +136,9 @@ body{
     
 }
 
-.faq-title {
-    height: 200px;
-}
+
 .faq-q {
-    width: 450px;
+    width: 100%;
 }
 .faq-answer {
     padding: 5%;
@@ -154,7 +150,132 @@ body{
     padding-right: 20%;
 }
 
+.pictitle{
+    width: 300px;
+    margin: 50px;
+}
+.navbar-profile{
+    display: none;
+}
+
+/* Definition page */
+.def-title{
+    font-family: Champagne;
+    font-size: 45px;
+}
+.def-pic{
+    width:100%;
+    
+}
+
+.def-desc{
+    font-family:"Times New Roman";
+    font-weight: lighter;
+}
+
+.def-post{
+    margin: 10% 0;
+}
+.def-icon{
+    width:50px;
+}
+
+.table-diet{
+    background-color: #eeeeee;
+    border: 0.3px solid lightgray;
+    box-shadow: 3px 3px 5px darkgrey;
+    border-radius: 4px;
+}
+
+.table-cell{
+    background-color: white;
+    margin: 1.5px;
+    padding: 1%;
+    width:20%;
+}
+.table-header{
+    padding-bottom: 5%;
+}
+
+.table-title{
+    font-family:Champagne;
+    font-size: 16px;
+    font-weight: bolder;
+}
+
+.table-content{
+    font-family: 'Times New Roman';
+    font-weight:lighter;
+    font-size: 15px;
+}
+
+/* BMI */
+.calculator{
+    background-color:#15533E;
+    width:50%;
+    min-width:300px;
+    margin:5% auto;
+    padding:1% 0;
+}
+.calc-title{
+    font-size:40px;
+    text-align: center;
+}
+.bmi-circle{
+    background-color: #f16659;
+    border-radius: 50%;
+    width: 150px;
+    height: 150px;
+    padding:30px 0;
+    font-size: 20px;
+    text-align: center;
+}
+.bmi-num{
+    font-size:40px;
+}
+
+@media(max-width: 600px){
+    
+    .calc-title{
+        font-size: 10px;
+    }
+    .table-title{
+        font-size:2vw;
+    }
+    .table-content{
+        font-size:1.8vw;
+    }
+}
+@media(max-width: 900px) {
+    .profile-pic{
+        display: none;
+    }
+    .navbar-profile{
+        display: block;
+        color: white;
+    }
+    .def-pic{
+        padding-bottom: 5%;
+    }
+    .def-icon{
+        display: none;
+    }
+    .table-title{
+        font-size:14px;
+    }
+    .table-content{
+        font-size:12px;
+    }
+}
+
+
 @media (max-width:1200px){
+    .calc-title{
+        font-size:30px;
+    }
+    .pictitle {
+        width: 150px;
+    }
     .nav-text, .text {
         font-size: 10px;
         padding: 2px 3px;
@@ -163,15 +284,12 @@ body{
     .navbrand {
         height: 50px;
     }
-    .faq-title {
-        height: 150px;
-    }
-
+    
     .faq-answer {
         padding: 5%;
         margin: 0 15%;
     }
-
+    
     .top-left {
         top: 10px;
         left: 35px;
@@ -183,11 +301,43 @@ body{
         width: 350px;
     }
     .q-bubble{
+        
         padding-right: 10%;
+    }
+    .def-title{
+        font-size:25px;
     }
 }
 
 .text:hover{
     color:black;
     opacity: 0.7;
+}
+@media only screen and (hover: none) and (pointer: coarse) {
+    .faq-q{
+        float: right;
+        width:80%;
+        margin-top:10px;
+    }
+    .top-left{
+        top: 20px;
+        left: 25%;
+        font-size: 10px;
+    }
+    .container{
+        width: 90%;
+    }
+    .q-bubble{
+        padding-right:0%;
+    }
+    .calculator {
+        max-width: 500px;
+        width: 80%;
+    }
+    .table-title{
+        font-size:10px;
+    }
+    .table-content{
+        font-size: 8px;
+    }
 }

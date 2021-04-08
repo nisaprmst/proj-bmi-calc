@@ -38,6 +38,7 @@ class CMS extends Component {
       };
     componentDidMount() {
         document.body.style.color = "black";
+        
     }
 
     postNewData = () => {

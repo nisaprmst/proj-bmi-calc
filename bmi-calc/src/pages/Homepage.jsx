@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import Calculator from '../components/Calculator';
 export default class Homepage extends Component {
     state= {
       show:false
@@ -13,7 +12,6 @@ export default class Homepage extends Component {
         <div>
            
             <br/><br/>
-            <Calculator/>
         </div>
       )
     }

@@ -22,7 +22,7 @@ class Authentication extends Component {
     render() { 
         return ( 
             <div className="center-screen">
-                <div style={{fontSize:"60px", color:"white"}}>
+                <div style={{fontSize:"50px", color:"white"}}>
                     <div >
                         Selamat Datang di 
                     </div>

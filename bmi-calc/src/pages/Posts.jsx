@@ -1,14 +1,15 @@
 import React, { Component } from 'react';
-import CMS from '../components/CMS';
+import Definition from '../components/Definition';
+import TableOfPost from '../components/TableOfPost';
 
 class Posts extends Component {
     state = {  
-        isAdmin: true
     }
     render() { 
         return ( 
             <>
-            {this.state.isAdmin  && <CMS/>}
+             <img src="https://i.ibb.co/p1Zsp4T/Group-7.png" className="pictitle" />
+            {this.props.isAdmin  && <TableOfPost/>}
             </>
          );
     }
