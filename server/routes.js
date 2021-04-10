@@ -14,6 +14,10 @@ module.exports = function(app) {
     // information
     app.route('/api/informations')
         .get(information.getAllInfo);
-    app.route('/api/add-information')
+    app.route('/api/information/:infoId')
+        .get(information.getInfoById);
+    app.route('/api/information/delete')
+        .post(information.deleteInfoById);
+    app.route('/api/information/add')
         .post(information.addInfo);
 };
