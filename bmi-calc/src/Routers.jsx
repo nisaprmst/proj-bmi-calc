@@ -1,5 +1,6 @@
 import {
     Route,
+    Switch,
     withRouter
   } from "react-router-dom";
 import React, { Component } from 'react';
@@ -13,13 +14,14 @@ import CMS from "./components/CMS";
 import WebDefinition from "./pages/WebDefinition";
 import EditProfile from "./pages/EditProfile";
 import BMIResult from "./pages/BMIResult";
+import ErrorPage from "./pages/404Error";
 
 
 
 class Routers extends Component {
     state = { 
         hasLogin: true,
-        isAdmin: false
+        isAdmin: true
      }
     
     componentDidMount = () => {
@@ -31,15 +33,22 @@ class Routers extends Component {
         return ( 
             <div>
                 <NavBar show={this.state.hasLogin}/>
-                <Route exact path="/" component={Homepage}/>
-                <Route path="/result" component={BMIResult}/>
-                <Route path="/login" component={Authentication} />
-                <Route path="/faq" component={Faq}/>
-                <Route path="/calculator" component={Calc} />
-                <Route path="/definisi" component={WebDefinition} />
-                <Route path="/profil" component={EditProfile}/>
-                <Route path="/deskripsiumum" children={<Posts isAdmin={this.state.isAdmin}/>} />
-                <Route path="/addpost" component={CMS}/>
+                <Switch>
+                    {this.state.isAdmin &&
+                        <Route path="/addpost" component={CMS}/>
+
+                    }
+                    <Route exact path="/" component={Homepage}/>
+                    <Route path="/result" component={BMIResult}/>
+                    <Route path="/deskripsiumum" children={<Posts isAdmin={this.state.isAdmin}/>} />
+                    <Route path="/login" component={Authentication} />
+                    <Route path="/faq" component={Faq}/>
+                    <Route path="/calculator" component={Calc} />
+                    <Route path="/definisi" component={WebDefinition} />
+                    <Route path="/profil" component={EditProfile}/>
+                    <Route  component={ErrorPage}/>
+                    
+                </Switch>
             </div>
          );
     }

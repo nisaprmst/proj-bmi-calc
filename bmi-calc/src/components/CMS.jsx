@@ -13,19 +13,21 @@ class CMS extends Component {
         editorState: EditorState.createEmpty(),
         post : {
             title: '',
+            image: '',
             content: ''
         }
       }
-    handleUserInput = (e) => {
-        const { name, value } = e.target;
+    handleInput = (e) => {
+        const {name, value } = e.target;
         this.setState({
             ...this.state,
             post :{
                 ...this.state.post,
-            title : value
+            [name] : value
             }
         });
     }
+
     onEditorStateChange = (editorState) => {
         const contentState = editorState.getCurrentContent();
         this.setState({
@@ -38,6 +40,8 @@ class CMS extends Component {
       };
     componentDidMount() {
         document.body.style.color = "black";
+        
+     
         
     }
 
@@ -77,12 +81,12 @@ class CMS extends Component {
         return ( 
         <>
         
-        <div style={{minWidth:"400px",width:"60%", margin:"5% auto"}}>
+        <div style={{minWidth:"300px",width:"60%", margin:"5% auto"}}>
             <Form onSubmit={this.handleSubmit}>
             <div style={{width:"100%"}}>
                 <Row>
                     <Col style={{textAlign:"left"}}>
-                        <h3>
+                        <h3 className="cms-title">
                             Add New Post
                             </h3>
                     </Col>
@@ -93,15 +97,24 @@ class CMS extends Component {
             </div>
             <hr/>
                 <Form.Group>
-                  <Form.Control type="text" name="title" value={this.state.post.title} placeholder="Title" className="form-cms" style={{marginBottom:"13px"}} onChange={(e) => this.handleUserInput(e)} onBlur={(e)=> this.handleUserInput(e)}  required/>
+                  <Form.Control type="text" name="title" value={this.state.post.title} placeholder="Title" className="form-cms" style={{marginBottom:"13px"}} onChange={(e) => this.handleInput(e)} onBlur={(e)=> this.handleInput(e)}  required/>
+                </Form.Group>
+                <Form.Group as={Row}>
+                  <Form.Label column xs="4" className="image-cms">Add Image Cover URL</Form.Label>
+                  <Col xs={8}>
+                    <Form.Control type="text" name="image" value={this.state.post.image} placeholder="Cover Image URL" className="form-cms" style={{marginBottom:"13px", paddingLeft:"10px"}} onChange={(e) => this.handleInput(e)} onBlur={(e)=> this.handleInput(e)}  required/>
+
+                  </Col>
+
                 </Form.Group>
             </Form>
         <Editor
             editorState={editorState}
+            wrapperStyle={{width:"100%"}}
             editorStyle={{border:"1px solid black", fontSize:"12px", padding:"0 1%", minHeight:"200px"}}
             onEditorStateChange={this.onEditorStateChange}
             toolbar={{
-                options: ['inline', 'blockType', 'fontSize', 'fontFamily', 'list', 'colorPicker', 'link', 'embedded', 'emoji', 'image', 'remove', 'history'],
+                options: ['inline', 'blockType', 'fontSize', 'fontFamily', 'list', 'colorPicker', 'link', 'embedded', 'emoji', 'remove', 'history'],
                 inline: {
                     options: ['bold', 'italic', 'underline', 'strikethrough', 'monospace'],
                 },
@@ -111,10 +124,10 @@ class CMS extends Component {
             }}
             
             />   
-        </div>
-        
          <h4>Editor content as HTML</h4>
          <div  dangerouslySetInnerHTML={{__html: this.state.post.content}} />
+        </div>
+        
 
         </> 
         );

@@ -14,7 +14,13 @@ body{
     src: url("./assets/fonts/No\ Virus.otf");
 }
 
+.cms-file{
+    border: 1px solid #326e85;
+    border-style: dashed;
+    border-radius: 10px;
+    
 
+}
 .modal-width{
     width: 500px;
 }
@@ -58,7 +64,7 @@ body{
     background-color: #15533E;
     opacity: 0.85;
     padding: 1% 2%;
-    width:25%;
+    width:110px;
     border: none;
     border-radius: 6px;
     color:white;
@@ -247,6 +253,12 @@ body{
     }
 }
 @media(max-width: 900px) {
+    .cms-title{
+        font-size:21px;
+    }
+    .image-cms{
+        font-size:10px;
+    }
     .profile-pic{
         display: none;
     }
@@ -314,6 +326,13 @@ body{
     opacity: 0.7;
 }
 @media only screen and (hover: none) and (pointer: coarse) {
+    .cms-title{
+        font-size:20px;
+        font-weight: bold;
+    }
+    .post-button{
+        font-size:16px;
+    }
     .faq-q{
         float: right;
         width:80%;
