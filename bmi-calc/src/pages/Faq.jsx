@@ -7,7 +7,7 @@ class Faq extends Component {
         const faqTitle = require('../assets/images/Faq.png');
         return ( 
             <>
-            <img src="https://i.ibb.co/4FmWPnQ/Faq.png" style={{padding:"20px"}} className="faq-title"/>
+            <img src="https://i.ibb.co/4FmWPnQ/Faq.png"  className="pictitle"/>
             <div style={{marginTop:"5%"}}>
                 <QnA question={"kapan"} answer={"naisk"}/>
 
