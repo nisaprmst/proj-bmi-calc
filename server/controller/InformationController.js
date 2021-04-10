@@ -26,3 +26,29 @@ exports.addInfo = function(req, res) {
         }
     })
 }
+
+exports.getInfoById = function(req, res) {
+    let id = req.params.infoId
+    let querySelect = 'SELECT * FROM informations WHERE id=' + id
+    console.log(querySelect)
+    conn.query(querySelect, (err, result) => {
+        if (err) {
+            response.error(err, 400, res)
+        } else {
+            response.ok(result.rows, res)
+        }
+    })
+};
+
+exports.deleteInfoById = function(req, res) {
+    let id = req.body.id
+    let queryDelete = 'DELETE FROM informations WHERE id=' + id
+    console.log(queryDelete)
+    conn.query(queryDelete, (err, result) => {
+        if (err) {
+            response.error(err, 400, res)
+        } else {
+            response.ok("Success deleting information " + id, res)
+        }
+    })
+}
