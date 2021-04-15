@@ -12,6 +12,27 @@ class Posts extends Component {
         }
     }
 
+    async fetchInfo() {
+        return fetch('http://localhost:8000/api/informations', {
+            mode: 'cors',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        })
+          .then(data => data.json())
+    }
+
+    componentDidMount() {
+        this.fetchInfo()
+        .then(res => {
+            if (res.status === 200) {
+                this.setState({
+                    posts: res.values
+                });
+                console.log(this.state);
+            }
+        });
+    }
    
 
 
