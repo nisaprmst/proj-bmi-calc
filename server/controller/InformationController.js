@@ -17,7 +17,8 @@ exports.addInfo = function(req, res) {
     let date = getDateTime.getDateTime()
     let title = req.body.title
     let content = req.body.content
-    let queryInsert = 'INSERT INTO informations (created_date, title, content) VALUES (' + '\'' + date + '\',\'' + title + '\',\'' + content + '\')'
+    let img_url = req.body.img_url
+    let queryInsert = 'INSERT INTO informations (created_date, title, content, img_url) VALUES (' + '\'' + date + '\',\'' + title + '\',\'' + content + '\',\'' + img_url + '\')'
     conn.query(queryInsert , (err, result) => {
         if (err) {
             response.error(err, 400, res)
