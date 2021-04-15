@@ -30,6 +30,7 @@ class Calc extends Component {
             bmiClass = "Obesitas II";
         }
         console.log(bmi);
+        console.log(this.props);
         this.props.history.push({
             pathname: '/result',
             state: { bmi: bmi, bmiClass: bmiClass}
