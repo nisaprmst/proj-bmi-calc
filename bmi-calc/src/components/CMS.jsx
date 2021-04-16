@@ -13,7 +13,7 @@ class CMS extends Component {
         editorState: EditorState.createEmpty(),
         post : {
             title: '',
-            image: '',
+            img_url: '',
             content: ''
         }
       }
@@ -32,21 +32,44 @@ class CMS extends Component {
         const contentState = editorState.getCurrentContent();
         this.setState({
             editorState,
-            post : {...this.statetitle, 
+            post : {...this.state.post, 
                 content : stateToHTML(contentState)
             }
           });
-
       };
     componentDidMount() {
-        document.body.style.color = "black";
-        
-     
-        
+        document.body.style.color = "black";   
     }
 
+    async postData(){
+        return fetch('http://localhost:5000/api/information/add',{
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body : JSON.stringify(this.state.post)
+        })
+    }
     postNewData = () => {
-        console.log("posted");
+        console.log(this.state.post)
+        this.postData()
+        .then(response => {
+            if (response.status === 200){
+                console.log(response);
+                Swal.fire({
+                    text:'Post berhasil ditambah!',
+                    icon:'success'
+                })
+                this.props.history.push('/deskripsiumum')
+            } else {
+                Swal.fire({
+                    text:'Ada error!',
+                    icon:'error'
+                })
+            }
+        })
+
+        
     }
     handleSubmit = (e) => {
         e.preventDefault();
@@ -66,8 +89,8 @@ class CMS extends Component {
                 confirmButtonColor:"#15533E",
                 showConfirmButton: true,
                 cancelButtonColor:"#800000",
-                showLoaderOnConfirm: true,
-                preConfirm: this.postNewData() 
+                preConfirm: ()=>this.postNewData(),
+                showLoaderOnConfirm: true
 
             })
             
@@ -102,7 +125,7 @@ class CMS extends Component {
                 <Form.Group as={Row}>
                   <Form.Label column xs="4" className="image-cms">Add Image Cover URL</Form.Label>
                   <Col xs={8}>
-                    <Form.Control type="text" name="image" value={this.state.post.image} placeholder="Cover Image URL" className="form-cms" style={{marginBottom:"13px", paddingLeft:"10px"}} onChange={(e) => this.handleInput(e)} onBlur={(e)=> this.handleInput(e)}  required/>
+                    <Form.Control type="text" name="img_url" value={this.state.post.img_url} placeholder="Cover Image URL" className="form-cms" style={{marginBottom:"13px", paddingLeft:"10px"}} onChange={(e) => this.handleInput(e)} onBlur={(e)=> this.handleInput(e)}  required/>
 
                   </Col>
 

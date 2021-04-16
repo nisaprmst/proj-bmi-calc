@@ -15,13 +15,14 @@ import WebDefinition from "./pages/WebDefinition";
 import EditProfile from "./pages/EditProfile";
 import BMIResult from "./pages/BMIResult";
 import ErrorPage from "./pages/404Error";
+import Post from "./components/Post";
 
 
 
 class Routers extends Component {
     state = { 
         hasLogin: true,
-        isAdmin: true
+        isAdmin: false
      }
     
     componentDidMount = () => {
@@ -40,7 +41,8 @@ class Routers extends Component {
                     }
                     <Route exact path="/" component={Homepage}/>
                     <Route path="/result" component={BMIResult}/>
-                    <Route path="/deskripsiumum" children={<Posts isAdmin={this.state.isAdmin}/>} />
+                    <Route exact path="/deskripsiumum" children={<Posts isAdmin={this.state.isAdmin}/>} />
+                    <Route path="/deskripsiumum/:id" component={Post} />
                     <Route path="/login" component={Authentication} />
                     <Route path="/faq" component={Faq}/>
                     <Route path="/calculator" component={Calc} />
