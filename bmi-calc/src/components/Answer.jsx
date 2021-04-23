@@ -5,8 +5,7 @@ class Answer extends Component {
     render() { 
         return ( 
         <div style={{textAlign:"left"}}>
-            <div className="faq-answer">
-            {this.props.answer}
+            <div dangerouslySetInnerHTML={{__html: this.props.answer}} className="faq-answer">
             </div>
 
         </div>
