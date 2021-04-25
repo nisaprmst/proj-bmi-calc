@@ -23,7 +23,7 @@ exports.addInfo = function(req, res) {
         if (err) {
             response.error(err, 400, res)
         } else {
-            response.ok("Success inserting information", res)
+            response.ok(result, res)
         }
     })
 }
