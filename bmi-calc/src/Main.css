@@ -22,7 +22,7 @@ body{
 
 }
 .modal-width{
-    width: 500px;
+    width: 70%;
 }
 .modal {
     color: black;
@@ -92,9 +92,7 @@ body{
 
 
 .user-button {
-    font-size: 20px;
     font-weight: bold;
-    padding: 1% 20%;
     border-radius: 10px;
 }
 .center-screen {
@@ -109,6 +107,7 @@ body{
 .navbrand {
     height: 70px;
 }
+
 
 .nav-text, .text {
     color: white;
@@ -253,6 +252,20 @@ body{
     height:200px;
     overflow-y: hidden;
 }
+
+.heightInput::-webkit-outer-spin-button,
+.heightInput::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+.heightInput{
+    width:100%;
+    border:none;
+    font-size:1vmax;
+    -moz-appearance: textfield;
+}
 @media(max-width: 600px){
     
     .calc-title{
@@ -341,6 +354,7 @@ body{
     opacity: 0.7;
 }
 @media only screen and (hover: none) and (pointer: coarse) {
+ 
     .cms-title{
         font-size:20px;
         font-weight: bold;

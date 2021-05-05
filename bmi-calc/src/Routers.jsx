@@ -12,7 +12,7 @@ import Calc from "./pages/Calc";
 import Posts from "./pages/Posts";
 import CMS from "./components/CMS";
 import WebDefinition from "./pages/WebDefinition";
-import EditProfile from "./pages/EditProfile";
+import Profile from "./pages/Profile";
 import BMIResult from "./pages/BMIResult";
 import ErrorPage from "./pages/404Error";
 import Post from "./components/Post";
@@ -47,7 +47,7 @@ class Routers extends Component {
                     <Route path="/faq" component={Faq}/>
                     <Route path="/calculator" component={Calc} />
                     <Route path="/definisi" component={WebDefinition} />
-                    <Route path="/profil" component={EditProfile}/>
+                    <Route path="/profil" component={Profile}/>
                     <Route  component={ErrorPage}/>
                     
                 </Switch>

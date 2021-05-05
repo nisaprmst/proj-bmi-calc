@@ -79,8 +79,6 @@ export default function AuthModal(props) {
       <Modal
         {...props}
         contentClassName="modal"
-        dialogClassName="modal-width"
-        size="lg"
         aria-labelledby="contained-modal-title-vcenter"
         onEntering={resetState}
         centered

@@ -22,26 +22,27 @@ class Authentication extends Component {
     render() { 
         return ( 
             <div className="center-screen">
-                <div style={{fontSize:"50px", color:"white"}}>
+                <div style={{fontSize:"4vmax", color:"white"}}>
                     <div >
                         Selamat Datang di 
                     </div>
                     <div style={{fontFamily:"NoVirus", fontWeight:"lighter"}}>O B E S I T E !</div>
                 </div>
-                <div style={{height:"200px",border:"solid 2px white", padding:"0 5%", margin: "2% 0 "}}>
-                    
-                </div>
+            
                 <div >
-                    <Container>
-                        <Row >
-                            <Col>
-                                <Button className="user-button" onClick={() => this.setModalShow()} >Log In</Button>
-                            </Col>
-                            <Col>
-                                <Button className="user-button" onClick={() => this.setModalShow2()}>Sign Up</Button>
-                            </Col>
-                        </Row>
-                    </Container>
+                    <Button
+                    style={{
+                        fontSize:"1.5vmax",
+                        margin:"0 5px"
+                    }} className="user-button" onClick={() => this.setModalShow()} >Log In</Button>
+                
+
+                    <Button
+                        style={{
+                        fontSize:"1.5vmax",
+                        margin:"0 5px"
+                    }}  className="user-button" onClick={() => this.setModalShow2()}>Sign Up</Button>
+                
 
                 </div>
                 <SignUp show={this.state.modalShow2}  onHide={()=>this.setModalShow2()} />

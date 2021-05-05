@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {Navbar, Button, Nav} from 'react-bootstrap';
-
+import AvatarImage from './AvatarImage';
 class NavBar extends Component {
     state = {  }
     
@@ -23,7 +23,10 @@ class NavBar extends Component {
                         </Nav>
                         <Nav>
                         <Nav.Link href="/profil">
-                                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRy8saQQFdwdBVPdZVPghDvmp5r_MmSE7PbNw&usqp=CAU" className="profile-pic navbrand" style={{borderRadius:"50%",paddingLeft:"10px"}} />
+                            <div className="profile-pic">
+                                <AvatarImage src={"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRy8saQQFdwdBVPdZVPghDvmp5r_MmSE7PbNw&usqp=CAU"} size={"50px"}/>
+
+                            </div>
                                 <p className="navbar-profile">Lihat profil</p>
                         </Nav.Link>
                         </Nav>
