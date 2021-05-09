@@ -11,21 +11,25 @@ class Posts extends Component {
     }
 
     async fetchInfo() {
-        return fetch('http://localhost:5000/api/informations', {
+        const token = localStorage.getItem('token');
+        return fetch('http://localhost:8000/api/information', {
             mode: 'cors',
             headers: {
                 'Content-Type': 'application/json',
+                'x-access-token': token
             },
         })
           .then(data => data.json())
     }
 
     async delete(id) {
-        return fetch('http://localhost:5000/api/information/delete',{
+        const token = localStorage.getItem('token');
+        return fetch('http://localhost:8000/api/information/delete',{
             method: 'POST',
             mode: 'cors',
             headers: {
                 'Content-Type': 'application/json',
+                'x-access-token': token
             },
             body : JSON.stringify({
                 'id' : id

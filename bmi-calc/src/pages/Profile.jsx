@@ -19,6 +19,20 @@ class Profile extends Component {
             [name]:value
         })
     }
+    handleLogout = () => {
+        const requestOptions = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' }
+          } 
+          fetch('http://localhost:8000/api/auth/logout', requestOptions)
+                  .then(response => response.json())
+                  .then(res => {
+                    localStorage.setItem('token', res.values.token);
+                    console.log(res.values.token);
+                    this.props.history.push("/login");
+                  })
+                  .then();
+    }
     render() { 
         return ( 
            <div style={{ margin:"auto", width:"70%"}}>
@@ -52,6 +66,19 @@ class Profile extends Component {
                             }}
                             onClick={()=>this.setState({show:true})}>
                                 Edit Profile
+                            </Button>
+                            <Button 
+                            variant="light"
+                            style={{
+                                marginTop:"10px",
+                                marginLeft: "5px",
+                                fontSize:"0.8vmax",
+                                padding:"0.5vmax 0.7vmax",
+                                backgroundColor: "red",
+                                color: "white"
+                            }}
+                            onClick={()=>this.handleLogout()}>
+                                Logout
                             </Button>
                         </div>
 

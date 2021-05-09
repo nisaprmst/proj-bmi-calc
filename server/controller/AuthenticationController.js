@@ -6,8 +6,6 @@ const response = require(__root + 'helper/response');
 const conn = require(__root + 'helper/db');
 const getDateTime = require(__root + 'helper/date');
 const VerifyToken = require(__root + 'helper/verifyToken');
-const AuthRole = require(__root + 'helper/authorization');
-const Role = require(__root + 'helper/role');
 const express = require("express");
 const router = express.Router();
 
@@ -22,7 +20,7 @@ router.post(
       if (err) response.error(err, 401, res);
       // create a token
       console.log(user);
-      let token = jwt.sign({ id: user.id }, config.secret, {
+      let token = jwt.sign({ id: req.body.username }, config.secret, {
         expiresIn: 86400 // expires in 24 hours
       });
       if (token) {
@@ -41,14 +39,16 @@ router.post(
 router.post(
   '/login',
   function (req, res) {
-    let query = 'SELECT FROM users WHERE email=' + req.body.email;
+    let query = 'SELECT * FROM users WHERE username=\'' + req.body.username + '\'';
     conn.query(query, (err, user) => {
-        if (err) response.error("Error on the server.", 401, res);
-        if (!user) response.error("No user found.", 401, res);
+        if (err) return response.error("Error on the server.", 401, res);
+
+        if (!user.rows[0]) return response.error("No user found.", 401, res);
+        const pass = user.rows[0].password;
         // check if the password is valid
         const passwordIsValid = bcrypt.compareSync(
           req.body.password,
-          user.password
+          pass
         );
         if (!passwordIsValid) {
             let result = {
@@ -59,7 +59,7 @@ router.post(
         }
         // if user is found and password is valid
         // create a token
-        const token = jwt.sign({ id: user._id }, config.secret, {
+        const token = jwt.sign({ id: req.body.username }, config.secret, {
           expiresIn: 17280000, // expires in 24 hours
         });
         // return the information including token as JSON
@@ -86,5 +86,17 @@ router.post(
     response.ok(result, res);
   }
 );
+
+router.get(
+  '/verify',
+  VerifyToken,
+  function(req, res) {
+    let result = {
+        auth: true,
+        token: req.headers["x-access-token"]
+    };
+    response.ok(result, res);
+  }
+)
 
 module.exports = router;

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Modal, Button, Form, Col, Row } from "react-bootstrap";
+import { useHistory } from "react-router-dom";
 const signup = {
     username: '',
     password: '',
@@ -15,7 +16,7 @@ const login = {
 }
 export default function AuthModal(props) {
   
-
+  const history = useHistory();
   const [newUser, setNewUser] = useState({
     username: '',
     password: '',
@@ -58,10 +59,53 @@ export default function AuthModal(props) {
   const handleSubmit = (e) => {
     
     e.preventDefault();
+    if (props.login) {
+      const requestOptions = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ 
+            username: oldUser.username,
+            password: oldUser.password
+        })
+      } 
+      fetch('http://localhost:8000/api/auth/login', requestOptions)
+              .then(response => response.json())
+              .then(res => {
+                localStorage.setItem('token', res.values.token);
+                console.log(res);
+                if (res.status == 200) {
+                  history.push("/definisi");
+                }
+              });
+    } else {
+      const requestOptions = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ 
+            username: newUser.username,
+            password: newUser.password,
+            nama: newUser.namalengkap,
+            email: newUser.email,
+            birth_date: newUser.tanggallahir,
+            height: newUser.tinggi,
+            weight: newUser.berat
+        })
+      } 
+      // TODO: check if email has been used
+      // emailnya blm ada juga
+      fetch('http://localhost:8000/api/auth/register', requestOptions)
+              .then(response => response.json())
+              .then(res => {
+                localStorage.setItem('token', res.values.token);
+                console.log(res);
+                if (res.status == 200) {
+                  history.push("/definisi");
+                }
+              });
+    }
+  }
 
-    console.log(`Form submitted`);    
-
-}
+  
   const button = 
      (
       <div style={{padding:"2% 0 5% 0", textAlign:"center"}}>

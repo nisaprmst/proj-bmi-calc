@@ -26,11 +26,43 @@ class Routers extends Component {
     }
     
     
-
-    componentDidMount = () => {
-        if (!this.state.hasLogin) {
+    checkLogin = () => {
+        const token = localStorage.getItem('token');
+        if (token != null) {
+            const requestOptions = {
+                method: 'GET',
+                headers: { 
+                    'Content-Type': 'application/json',
+                    'x-access-token': token
+                }
+              } 
+              fetch('http://localhost:8000/api/auth/verify', requestOptions)
+                      .then(response => response.json())
+                      .then(res => {
+                        if (res.values.auth) {
+                            this.setState({
+                                hasLogin: true,
+                                isAdmin: false
+                            });
+                        } else {
+                            this.props.history.push("/login");
+                        }
+                        
+                      })
+                      .catch(err => {
+                        localStorage.setItem('token', null);
+                        this.setState({
+                            hasLogin: false,
+                            isAdmin: false
+                        });
+                        this.props.history.push("/login");
+                      });
+        } else {
             this.props.history.push("/login");
         }
+    }
+    componentDidMount = () => {
+        this.checkLogin();
     }
     render() { 
         return ( 

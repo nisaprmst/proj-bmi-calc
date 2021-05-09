@@ -42,10 +42,12 @@ class CMS extends Component {
     }
 
     async postData(){
-        return fetch('http://localhost:5000/api/information/add',{
+        const token = localStorage.getItem('token');
+        return fetch('http://localhost:8000/api/information/add',{
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
+                'x-access-token': token
             },
             body : JSON.stringify(this.state.post)
         })

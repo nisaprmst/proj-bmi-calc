@@ -17,13 +17,7 @@ function verifyToken(req, res, next) {
 
     // if everything is good, save to request for use in other routes
 
-    req.userId = decoded.id;
-    //next();
-    let query = 'SELECT FROM users WHERE id=' + req.userId;
-    conn.query(query, (err, user) => {
-      req.user = user;
-      next();
-    });
+    next();
   });
 }
 

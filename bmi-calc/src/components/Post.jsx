@@ -11,10 +11,12 @@ class Post extends Component {
         showMore: false
      }
     async fetchInfo(id) {
-        return fetch('http://localhost:5000/api/information/'+id, {
+        const token = localStorage.getItem('token');
+        return fetch('http://localhost:8000/api/information/'+id, {
             mode: 'cors',
             headers: {
                 'Content-Type': 'application/json',
+                'x-access-token': token
             },
         })
           .then(data => data.json())
