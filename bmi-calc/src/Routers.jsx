@@ -21,10 +21,12 @@ import Post from "./components/Post";
 
 class Routers extends Component {
     state = { 
-        hasLogin: true,
+        hasLogin: false,
         isAdmin: false
-     }
+    }
     
+    
+
     componentDidMount = () => {
         if (!this.state.hasLogin) {
             this.props.history.push("/login");

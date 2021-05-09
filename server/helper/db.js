@@ -1,4 +1,4 @@
-require('dotenv').config({path: __dirname + '/.env'})
+require('dotenv').config({path: __root + '.env'})
 const { Pool } = require('pg')
 
 const isProduction = process.env.NODE_ENV === 'production'
@@ -9,4 +9,4 @@ const conn = new Pool({
         rejectUnauthorized: false 
     },
 })
-module.exports =  conn ;
+module.exports =  conn;
