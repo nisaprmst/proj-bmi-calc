@@ -61,6 +61,7 @@ export default function EditProfileModal(props) {
   }
     
       return (
+       <> 
         
         <Modal
           {...props}
@@ -184,5 +185,6 @@ export default function EditProfileModal(props) {
           </Modal.Body>
         
         </Modal>
+        </>
       );
     }

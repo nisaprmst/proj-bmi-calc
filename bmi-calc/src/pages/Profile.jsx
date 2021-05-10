@@ -24,12 +24,12 @@ class Profile extends Component {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' }
           } 
-          fetch('http://localhost:8000/api/auth/logout', requestOptions)
+          fetch('http://localhost:5000/api/auth/logout', requestOptions)
                   .then(response => response.json())
                   .then(res => {
                     localStorage.setItem('token', res.values.token);
                     console.log(res.values.token);
-                    this.props.history.push("/login");
+                    window.location.reload();
                   })
                   .then();
     }

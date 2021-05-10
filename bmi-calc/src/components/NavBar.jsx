@@ -15,11 +15,11 @@ class NavBar extends Component {
                       <Navbar.Collapse id="responsive-navbar-nav">
                         <Nav className="mr-auto" >
                             <Nav.Link href="/definisi"  style={{color:"white"}}> Definisi </Nav.Link>
-
                             <Nav.Link href="/deskripsiumum"  style={{color:"white"}} > Informasi Umum </Nav.Link>
                             <Nav.Link href="/calculator"  style={{color:"white"}}> Hitung BMI </Nav.Link>
-                            <Nav.Link  style={{color:"white"}}> Chat dengan Apoteker </Nav.Link>
-                            <Nav.Link href="/faq" style={{color:"white"}} > FAQ </Nav.Link>        
+                            <Nav.Link href="/faq" style={{color:"white"}} > FAQ </Nav.Link>
+                      {!this.props.isAdmin && 
+                            <Nav.Link href="/userlog" style={{color:"white"}}> User Log</Nav.Link>}        
                         </Nav>
                         <Nav>
                         <Nav.Link href="/profil">

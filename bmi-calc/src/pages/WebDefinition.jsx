@@ -4,6 +4,15 @@ import Definition from '../components/Definition';
 import {FaPills} from 'react-icons/fa';
 class WebDefinition extends Component {
     state = {  }
+
+   componentDidMount = () => {
+       console.log("mount")
+       document.body.style.backgroundColor = "white";
+   }
+
+   componentDidUpdate = () => {
+       console.log("update")
+   }
     render() { 
         return ( 
             <>

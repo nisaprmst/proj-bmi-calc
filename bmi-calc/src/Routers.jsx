@@ -16,6 +16,8 @@ import Profile from "./pages/Profile";
 import BMIResult from "./pages/BMIResult";
 import ErrorPage from "./pages/404Error";
 import Post from "./components/Post";
+import Whatsapp from "./components/Whatsapp";
+import UserLog from "./pages/UserLog";
 
 
 
@@ -28,7 +30,7 @@ class Routers extends Component {
     
     checkLogin = () => {
         const token = localStorage.getItem('token');
-        if (token != null) {
+        if (token != null) {    
             const requestOptions = {
                 method: 'GET',
                 headers: { 
@@ -36,7 +38,7 @@ class Routers extends Component {
                     'x-access-token': token
                 }
               } 
-              fetch('http://localhost:8000/api/auth/verify', requestOptions)
+              fetch('http://localhost:5000/api/auth/verify', requestOptions)
                       .then(response => response.json())
                       .then(res => {
                         if (res.values.auth) {
@@ -44,6 +46,10 @@ class Routers extends Component {
                                 hasLogin: true,
                                 isAdmin: false
                             });
+                            if(window.location.pathname=="/login"){
+                                this.props.history.push("/definisi")
+
+                            }
                         } else {
                             this.props.history.push("/login");
                         }
@@ -66,12 +72,14 @@ class Routers extends Component {
     }
     render() { 
         return ( 
-            <div>
+            <div style={{position:"relative"}}>
                 <NavBar show={this.state.hasLogin}/>
                 <Switch>
                     {this.state.isAdmin &&
+                    <>
                         <Route path="/addpost" component={CMS}/>
-
+                        <Route path="/userlog" component={UserLog} />
+                        </>
                     }
                     <Route exact path="/" component={Homepage}/>
                     <Route path="/result" component={BMIResult}/>
@@ -80,11 +88,15 @@ class Routers extends Component {
                     <Route path="/login" component={Authentication} />
                     <Route path="/faq" component={Faq}/>
                     <Route path="/calculator" component={Calc} />
-                    <Route path="/definisi" component={WebDefinition} />
+                    <Route path="/definisi" component={ WebDefinition} />
                     <Route path="/profil" component={Profile}/>
                     <Route  component={ErrorPage}/>
                     
                 </Switch>
+                {this.state.hasLogin &&
+                <div style={{position:"fixed", bottom:"2vmax", right:"2vmax"}}>
+                    <Whatsapp/>
+                </div>}
             </div>
          );
     }
