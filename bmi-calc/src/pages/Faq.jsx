@@ -4,7 +4,9 @@ import QnA from '../components/QnA';
 class Faq extends Component {
     state = {  }
 
-  
+    componentDidMount = () => {
+        document.title= "FAQ"
+    }
     render() { 
         const qna = [
             {

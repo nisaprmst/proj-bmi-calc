@@ -38,6 +38,7 @@ class Posts extends Component {
     }
 
     componentDidMount() {
+        document.title = "Deskripsi Umum"
         this.fetchInfo()
         .then(res => {
             if (res.status === 200) {

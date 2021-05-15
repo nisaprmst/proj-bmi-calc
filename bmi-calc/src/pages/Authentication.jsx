@@ -17,7 +17,8 @@ class Authentication extends Component {
     }
 
     componentDidMount() {
-        document.body.style.backgroundColor = "#15533E"
+        document.body.style.backgroundColor = "#15533E";
+        document.title = "Authentication"
     }
     render() { 
         return ( 

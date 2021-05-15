@@ -283,8 +283,10 @@ body{
 /* Firefox */
 .heightInput{
     width:100%;
-    border:none;
-    font-size:1vmax;
+    border:2px solid #15533E;
+    border-radius: 8px;
+    padding: 3px 5px;
+    font-size:12px;
     -moz-appearance: textfield;
 }
 @media(max-width: 600px){

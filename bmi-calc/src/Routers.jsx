@@ -81,6 +81,7 @@ class Routers extends Component {
                         <Route path="/userlog" component={UserLog} />
                         </>
                     }
+                    
                     <Route exact path="/" component={Homepage}/>
                     <Route path="/result" component={BMIResult}/>
                     <Route exact path="/deskripsiumum" children={<Posts isAdmin={this.state.isAdmin}/>} />

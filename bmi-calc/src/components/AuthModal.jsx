@@ -86,7 +86,14 @@ export default function AuthModal(props) {
                       })
                       setLoading(false)
                     }
-                  });
+                  })
+                  .catch(err => {
+                    Swal.fire({
+                      text:"Ada error! Coba lagi dalam beberapa saat",
+                      icon:"error"
+                    })
+                    setLoading(false)
+                  })
         } else {
           const requestOptions = {
             method: 'POST',

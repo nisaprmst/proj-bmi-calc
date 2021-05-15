@@ -10,6 +10,7 @@ class Profile extends Component {
         berat: null
      }
     componentDidMount() {
+        document.title = "Profil"
         document.body.style.backgroundColor = "#bfe7d4";
     }
     handleInput = (e) => {
@@ -39,7 +40,7 @@ class Profile extends Component {
                 <Row style={{padding:"10% 5%"}}>
                     <Col xs="auto" >
                     <div >
-                        <AvatarImage src={"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRy8saQQFdwdBVPdZVPghDvmp5r_MmSE7PbNw&usqp=CAU"} size={"10vmax"}/>
+                        <AvatarImage src={"https://t4.ftcdn.net/jpg/00/64/67/63/360_F_64676383_LdbmhiNM6Ypzb3FM4PPuFP9rHe7ri8Ju.jpg"} size={"10vmax"}/>
                     </div>
                     </Col>
                     <Col style={{ position:"relative"}}>

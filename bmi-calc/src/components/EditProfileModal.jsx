@@ -11,34 +11,12 @@ export default function EditProfileModal(props) {
     const [profile, setProfile] = useState({
       avatar: "",
       tinggi: 160,
-      password: null,
-      confirmPassword: null,
+      password: '',
+      confirmPassword: '',
 
     })
   
-    
-    const selectImage = async (e) => {
-        let image = e.target.files[0];
-        let imageSize = image.size;
-        let isImgExtension = image.name.match(/\.(jpg|jpeg|png)$/gi);
-    
-        if (isImgExtension) {
-          if (imageSize <= 10485760) {
-            setProfile({ ...profile, avatar: image });
-            setImage(URL.createObjectURL(image));
-          } else {
-            swal('Image must be less than 10 MB', {
-              button: null,
-              icon: 'error',
-            });
-          }
-        } else {
-          swal('Unsupported image extension', {
-            button: null,
-            icon: 'error',
-          });
-        }
-      };
+   
   
     
     
@@ -46,7 +24,7 @@ export default function EditProfileModal(props) {
     
     const handleInput = (e) =>{
         const {name, value} = e.target;
-
+        console.log(name)
         setProfile({...profile,
         [name] : value})
   
@@ -55,6 +33,7 @@ export default function EditProfileModal(props) {
     const handleSubmit = (e) => {
       
       e.preventDefault();
+      
   
       console.log(`Form submitted`);    
   
@@ -79,14 +58,20 @@ export default function EditProfileModal(props) {
              </div>
             </Modal.Title>
           </Modal.Header>
-          <Modal.Body style={{ textAlign:"center", position:"relative"}}>
-                <AvatarImage src={image} size={"12vmax"} />
+          <Modal.Body style={{  position:"relative"}}>
                 <Button variant="outline-secondary"
-                        onClick={()=>showPassWord(!pass)}
+                        onClick={()=>{
+                          if (pass){
+                            setProfile({...profile,
+                            password:"",
+                            confirmPassword:""})
+                          }
+                          showPassWord(!pass)
+                        }}
                         style={{
                             fontSize:"0.7vmax",
                             padding:"0.3vmax 0.6vmax",
-                            marginTop:"20px",
+                            marginTop:"5px",
                             position:"absolute",
                             top:"5px",
                             right:"10px"
@@ -94,29 +79,13 @@ export default function EditProfileModal(props) {
                         }}>Ganti Password</Button>
                 <div >
                    
-                    <Button 
-                    style={{
-                        fontSize:"1vmax",
-                        padding:"0.5vmax 0.8vmax",
-                        marginTop:"20px",
-                        position:"relative"
-                    }}
-                    variant="outline-success">
-                         <input
-                            type="file"
-                            accept=".png, .jpg, .jpeg"
-                            id="avatar"
-                            onChange={(e) => selectImage(e)}
-                            style={{ opacity:"0", position:"absolute", width:"100%" }}
-                            />
-                            Edit foto profil
-                    </Button>
-                    <div style={{ width:"80%", margin:"auto", paddingTop:"30px"}}>
+                   
+                    <div style={{ width:"90%", paddingTop:"40px"}}>
                         <Row>
-                            <Col style={{
-                                fontSize:"1.2vmax",
+                            <Col xs={5} style={{
+                                fontSize:"12px",
                                 fontWeight:"lighter",
-                                textAlign:"right"}}>
+                                textAlign:"left"}}>
                                 Tinggi
                             </Col>
                             <Col>
@@ -128,6 +97,15 @@ export default function EditProfileModal(props) {
                                 onChange={(e)=>handleInput(e)}
                                 >
                                 </input>
+                                {(!profile.tinggi || profile.tinggi >= 280) && 
+                                    <div style={{
+                                      position:"absolute",
+                                      color:"red",
+                                      fontSize:"9px",
+                                      fontWeight:"lighter"}}>
+                                      Masukkan tinggi yang benar!
+
+                                </div>}
                             </Col>
                         </Row>
                     </div>
@@ -135,16 +113,16 @@ export default function EditProfileModal(props) {
                        
                         {pass &&
                         
-                        <div style={{paddingTop:"20px", width:"80%", margin:"auto"}}>
+                        <div style={{paddingTop:"20px", width:"90%"}}>
                             <Row>
-                                <Col style={{
-                                    fontWeight:"lighter",
-                                    textAlign:"right"}}>
+                                <Col xs={5} style={{
+                                    fontSize:"12px",
+                                    fontWeight:"lighter"}}>
                                     Password Baru
                                 </Col>
                                 <Col>
                                     <input
-                                    value={profile.tinggi}
+                                    value={profile.password}
                                     type="password"
                                     className="heightInput"
                                     name="password"
@@ -154,26 +132,35 @@ export default function EditProfileModal(props) {
                                 </Col>
                              </Row>
                              <Row style={{paddingTop:"20px"}}>
-                                <Col style={{
-                                    fontWeight:"lighter",
-                                    textAlign:"right"}}>
+                                <Col xs={5} style={{
+                                    fontSize:"12px",
+                                    fontWeight:"lighter"}}>
                                     Konfirmasi Password
                                 </Col>
-                                <Col>
+                                <Col style={{position:"relative"}}>
                                     <input
-                                    value={profile.tinggi}
+                                    value={profile.confirmPassword}
                                     type="password"
                                     className="heightInput"
-                                    name="password"
+                                    name="confirmPassword"
                                     onChange={(e)=>handleInput(e)}
                                     >
                                     </input>
+                                    {profile.password && profile.confirmPassword && profile.password != profile.confirmPassword &&
+                                    <div style={{
+                                      position:"absolute",
+                                      color:"red",
+                                      fontSize:"9px",
+                                      fontWeight:"lighter"}}>
+                                        Password belum sama!
+
+                                      </div>}
                                 </Col>
                              </Row>
                             
                         </div>}
                         
-                        <Button style={{width:"100%", fontSize:"1vmax", marginTop:"30px", borderRadius:"10px"}}>
+                        <Button disabled={profile.password != profile.confirmPassword || profile.tinggi >=290} style={{width:"100%", fontSize:"1vmax", marginTop:"30px", borderRadius:"10px"}}>
                             Simpan
                         </Button>
                     </div>

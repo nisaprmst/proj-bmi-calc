@@ -6,12 +6,8 @@ class WebDefinition extends Component {
     state = {  }
 
    componentDidMount = () => {
-       console.log("mount")
+       document.title = "Definisi Web";
        document.body.style.backgroundColor = "white";
-   }
-
-   componentDidUpdate = () => {
-       console.log("update")
    }
     render() { 
         return ( 
