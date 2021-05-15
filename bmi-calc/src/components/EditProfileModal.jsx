@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Modal, Button, Form, Col, Row } from "react-bootstrap";
 import AvatarImage from "./AvatarImage";
 
@@ -9,19 +9,39 @@ export default function EditProfileModal(props) {
     const [image, setImage] = useState('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRy8saQQFdwdBVPdZVPghDvmp5r_MmSE7PbNw&usqp=CAU');
     const [pass, showPassWord] = useState(false);
     const [profile, setProfile] = useState({
-      avatar: "",
-      tinggi: 160,
-      password: '',
-      confirmPassword: '',
+      tinggi: 0,
+      berat: 0,
+      password: 0,
+      confirmPassword: 0,
+    });
 
-    })
+    useEffect(() => {
+      let mounted = true;
+      const token = localStorage.getItem('token');
+      const requestOptions = {
+        method: 'GET',
+        headers: { 
+          'Content-Type': 'application/json',
+          'x-access-token': token
+       },
+      } 
+      fetch('http://localhost:5000/api/user/info', requestOptions)
+        .then(response => response.json())
+        .then(item => {
+          if (mounted) {
+            if (item.status === 200) {
+              setProfile({
+                tinggi : item.values.height,
+                berat : item.values.weight,
+              });
+            }
+          }
+        })
+        .catch(err => {});
+      return () => mounted = false;
+    }, []);
+
   
-   
-  
-    
-    
-    
-    
     const handleInput = (e) =>{
         const {name, value} = e.target;
         console.log(name)
@@ -31,10 +51,53 @@ export default function EditProfileModal(props) {
       
     }
     const handleSubmit = (e) => {
-      
+      console.log("SUBMIT UPDATE");
       e.preventDefault();
-      
-  
+      const token = localStorage.getItem('token');
+      if (pass) {
+        const requestOptions = {
+          method: 'PUT',
+          headers: { 
+            'Content-Type': 'application/json',
+            'x-access-token': token
+           },
+          body: JSON.stringify({ 
+              newPassword: profile.password
+          })
+        } 
+        fetch('http://localhost:5000/api/user/change-password', requestOptions)
+          .then(response => response.json())
+          .then(res => {
+            if (res.status == 200) {
+              window.location.reload();
+            }
+          })
+          .catch(err => {
+            console.log("error");
+          });
+      } else {
+        const requestOptions = {
+          method: 'PUT',
+          headers: { 
+            'Content-Type': 'application/json',
+            'x-access-token': token
+           },
+          body: JSON.stringify({ 
+              height: profile.tinggi,
+              weight: profile.berat
+          })
+        } 
+        fetch('http://localhost:5000/api/user/update', requestOptions)
+          .then(response => response.json())
+          .then(res => {
+            if (res.status == 200) {
+              window.location.reload();
+            }
+          })
+          .catch(err => {
+            console.log("error");
+          });
+      }
       console.log(`Form submitted`);    
   
   }
@@ -81,6 +144,8 @@ export default function EditProfileModal(props) {
                    
                    
                     <div style={{ width:"90%", paddingTop:"40px"}}>
+                      {!pass &&
+                      <div>
                         <Row>
                             <Col xs={5} style={{
                                 fontSize:"12px",
@@ -108,12 +173,41 @@ export default function EditProfileModal(props) {
                                 </div>}
                             </Col>
                         </Row>
+                        <Row style={{paddingTop:"20px"}}>
+                            <Col xs={5} style={{
+                                fontSize:"12px",
+                                fontWeight:"lighter",
+                                textAlign:"left"}}>
+                                Berat
+                            </Col>
+                            <Col>
+                                <input
+                                value={profile.berat}
+                                type="number"
+                                className="heightInput"
+                                name="berat"
+                                onChange={(e)=>handleInput(e)}
+                                >
+                                </input>
+                                {(!profile.berat || profile.berat >= 280) && 
+                                    <div style={{
+                                      position:"absolute",
+                                      color:"red",
+                                      fontSize:"9px",
+                                      fontWeight:"lighter"}}>
+                                      Masukkan berat yang benar!
+
+                                </div>}
+                            </Col>
+                        </Row>
+                      </div>
+                      }
                     </div>
                     <div>
                        
                         {pass &&
                         
-                        <div style={{paddingTop:"20px", width:"90%"}}>
+                        <div style={{width:"90%"}}>
                             <Row>
                                 <Col xs={5} style={{
                                     fontSize:"12px",
@@ -160,7 +254,10 @@ export default function EditProfileModal(props) {
                             
                         </div>}
                         
-                        <Button disabled={profile.password != profile.confirmPassword || profile.tinggi >=290} style={{width:"100%", fontSize:"1vmax", marginTop:"30px", borderRadius:"10px"}}>
+                        <Button 
+                        disabled={profile.password != profile.confirmPassword || profile.tinggi >=290} 
+                        style={{width:"100%", fontSize:"1vmax", marginTop:"30px", borderRadius:"10px"}}
+                        onClick={handleSubmit}>
                             Simpan
                         </Button>
                     </div>

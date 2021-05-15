@@ -1,5 +1,6 @@
 'use strict';
 const response = require(__root + 'helper/response');
+const bcrypt = require('bcryptjs');
 const conn = require(__root + 'helper/db');
 const getDateTime = require(__root + 'helper/date');
 const VerifyToken = require(__root + 'helper/verifyToken');
@@ -42,7 +43,28 @@ router.put(
                 }
             })
         } catch (error) {
-            response.error("Error while updating database", 400, res);
+            response.error("Error while updating profil", 400, res);
+        }
+    }
+)
+
+router.put(
+    '/change-password',
+    VerifyToken,
+    function(req, res) {
+        console.log(req.body.newPassword);
+        try {
+            const hashedPassword = bcrypt.hashSync(req.body.newPassword, 8);
+            const query = 'UPDATE users SET password=\'' + hashedPassword + '\'' + ' WHERE username=\'' + req.user.username + '\'';
+            conn.query(query, (err, result) => {
+                if (err) {
+                    response.error("password not valid", 400, res);
+                } else {
+                    response.ok('Success update password', res);
+                }
+            })
+        } catch (error) {
+            response.error("Error while updating password", 400, res);
         }
     }
 )

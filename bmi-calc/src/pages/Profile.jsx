@@ -5,13 +5,41 @@ import EditProfileModal from '../components/EditProfileModal';
 import Field from '../components/Field';
 
 class Profile extends Component {
-    state = { 
-        show: false,
-        berat: null
-     }
+    constructor(props) {
+        super(props);
+
+        this.state = { 
+            show: false,
+            berat: 0,
+            tinggi: 0
+        }
+    }
     componentDidMount() {
         document.title = "Profil"
         document.body.style.backgroundColor = "#bfe7d4";
+        this.fetchProfile();
+    }
+    fetchProfile() {
+        const token = localStorage.getItem('token');
+        const requestOptions = {
+            method: 'GET',
+            headers: { 
+            'Content-Type': 'application/json',
+            'x-access-token': token
+        },
+        } 
+        fetch('http://localhost:5000/api/user/info', requestOptions)
+            .then(response => response.json())
+            .then(item => {
+                if (item.status === 200) {
+                this.setState({
+                    show: false,
+                    tinggi : item.values.height,
+                    berat : item.values.weight,
+                });
+                }
+            })
+            .catch(err => {});
     }
     handleInput = (e) => {
         const {name, value} = e.target;
@@ -56,7 +84,7 @@ class Profile extends Component {
                                 color:"black",
                                 fontSize:"1vmax"
                             }}>
-                                160 cm
+                                {this.state.tinggi} cm, {this.state.berat} kg
                         </div>
                             <Button 
                             variant="light"
