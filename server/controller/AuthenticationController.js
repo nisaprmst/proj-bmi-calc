@@ -13,20 +13,20 @@ const router = express.Router();
 router.post(
   '/register',
   function(req, res) {
-    let hashedPassword = bcrypt.hashSync(req.body.password, 8);
-    let values = '(' + '\'' + req.body.username + '\',\'' + req.body.email + '\',\'' + hashedPassword + '\',\'' + req.body.name + '\',\'' + req.body.birth_date + '\',\'' + req.body.height + '\',\'' + req.body.weight + '\')'
-    let queryInsert = 'INSERT INTO users (username, email, password, name, birth_date, height, weight) VALUES ' + values;
+    const hashedPassword = bcrypt.hashSync(req.body.password, 8);
+    const values = '(' + '\'' + req.body.username + '\',\'' + req.body.email + '\',\'' + hashedPassword + '\',\'' + req.body.name + '\',\'' + req.body.birth_date + '\',\'' + req.body.height + '\',\'' + req.body.weight + '\',\'' + "USER" + '\')'
+    const queryInsert = 'INSERT INTO users (username, email, password, name, birth_date, height, weight, role) VALUES ' + values;
     conn.query(queryInsert,  (err, user) => {
       if (err) response.error(err, 401, res);
       // create a token
-      console.log(user);
-      let token = jwt.sign({ id: req.body.username }, config.secret, {
+      const token = jwt.sign({ username: req.body.username }, config.secret, {
         expiresIn: 86400 // expires in 24 hours
       });
       if (token) {
-        let result = {
+        const result = {
             auth: true,
-            token
+            token,
+            username: req.body.username
         }
         response.ok(result, res);
       } else {
@@ -59,14 +59,15 @@ router.post(
         }
         // if user is found and password is valid
         // create a token
-        const token = jwt.sign({ id: req.body.username }, config.secret, {
+        const token = jwt.sign({ username: req.body.username }, config.secret, {
           expiresIn: 17280000, // expires in 24 hours
         });
         // return the information including token as JSON
         if (token) {
             let result = {
                 auth: true,
-                token
+                token,
+                username: req.body.username
             }
             response.ok(result, res);
         } else {

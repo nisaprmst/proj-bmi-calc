@@ -16,8 +16,17 @@ function verifyToken(req, res, next) {
         .send({ auth: false, message: "Failed to authenticate token." });
 
     // if everything is good, save to request for use in other routes
+    req.userId = decoded.id;
 
-    next();
+    const query = 'SELECT * FROM users WHERE username=\'' + decoded.username + '\'';
+    conn.query(query, (err, result) => {
+        if (err) {
+          response.error(err, 401, res);
+        } else {
+          req.user = result.rows[0];
+          next();
+        }
+    })
   });
 }
 

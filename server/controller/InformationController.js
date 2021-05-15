@@ -45,7 +45,6 @@ router.get(
     function(req, res) {
         let id = req.params.infoId
         let querySelect = 'SELECT * FROM informations WHERE id=' + id
-        console.log(querySelect)
         conn.query(querySelect, (err, result) => {
             if (err) {
                 response.error(err, 400, res)
@@ -62,7 +61,6 @@ router.post(
     function(req, res) {
         let id = req.body.id
         let queryDelete = 'DELETE FROM informations WHERE id=' + id
-        console.log(queryDelete)
         conn.query(queryDelete, (err, result) => {
             if (err) {
                 response.error(err, 400, res)
