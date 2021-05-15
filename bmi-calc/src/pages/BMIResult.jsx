@@ -7,6 +7,7 @@ class BMIResult extends Component {
         bmiClass: "Normal"
      }
      componentDidMount()  {
+        document.title = "Hasil BMI"
         if(this.props.location.state){
             const bmi = this.props.location.state.bmi;
             const bmiClass = this.props.location.state.class;

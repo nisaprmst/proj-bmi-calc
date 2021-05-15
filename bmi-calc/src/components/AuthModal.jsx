@@ -1,6 +1,7 @@
 import { useState } from "react";
-import { Modal, Button, Form, Col, Row } from "react-bootstrap";
+import { Modal, Button, Form, Col, Row, Spinner } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
+import Swal from "sweetalert2";
 const signup = {
     username: '',
     password: '',
@@ -15,7 +16,6 @@ const login = {
   password: ''
 }
 export default function AuthModal(props) {
-  
   const history = useHistory();
   const [newUser, setNewUser] = useState({
     username: '',
@@ -30,6 +30,7 @@ export default function AuthModal(props) {
     username: '',
     password: ''
   })
+  const [loading, setLoading] = useState(false)
 
   const resetState = () => {
     setNewUser(signup);
@@ -59,50 +60,75 @@ export default function AuthModal(props) {
   const handleSubmit = (e) => {
     
     e.preventDefault();
-    if (props.login) {
-      const requestOptions = {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ 
-            username: oldUser.username,
-            password: oldUser.password
-        })
-      } 
-      fetch('http://localhost:8000/api/auth/login', requestOptions)
-              .then(response => response.json())
-              .then(res => {
-                localStorage.setItem('token', res.values.token);
-                console.log(res);
-                if (res.status == 200) {
-                  history.push("/definisi");
-                }
-              });
-    } else {
-      const requestOptions = {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ 
-            username: newUser.username,
-            password: newUser.password,
-            nama: newUser.namalengkap,
-            email: newUser.email,
-            birth_date: newUser.tanggallahir,
-            height: newUser.tinggi,
-            weight: newUser.berat
-        })
-      } 
-      // TODO: check if email has been used
-      // emailnya blm ada juga
-      fetch('http://localhost:8000/api/auth/register', requestOptions)
-              .then(response => response.json())
-              .then(res => {
-                localStorage.setItem('token', res.values.token);
-                console.log(res);
-                if (res.status == 200) {
-                  history.push("/definisi");
-                }
-              });
+    try {
+
+      setLoading(true);
+      // if (loading){
+        if (props.login) {
+          const requestOptions = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ 
+                username: oldUser.username,
+                password: oldUser.password
+            })
+          } 
+          fetch('http://localhost:5000/api/auth/login', requestOptions)
+                  .then(response => response.json())
+                  .then(res => {
+                    localStorage.setItem('token', res.values.token);
+                    if (res.status == 200) {
+                      window.location.reload();
+                    } else{
+                      Swal.fire({
+                        text:"Salah username atau password!",
+                        icon:"error"
+                      })
+                      setLoading(false)
+                    }
+                  })
+                  .catch(err => {
+                    Swal.fire({
+                      text:"Ada error! Coba lagi dalam beberapa saat",
+                      icon:"error"
+                    })
+                    setLoading(false)
+                  })
+        } else {
+          const requestOptions = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ 
+                username: newUser.username,
+                password: newUser.password,
+                nama: newUser.namalengkap,
+                email: newUser.email,
+                birth_date: newUser.tanggallahir,
+                height: newUser.tinggi,
+                weight: newUser.berat
+            })
+          } 
+          // TODO: check if email has been used
+          // emailnya blm ada juga
+          fetch('http://localhost:5000/api/auth/register', requestOptions)
+                  .then(response => response.json())
+                  .then(res => {
+                    localStorage.setItem('token', res.values.token);
+                    console.log(res);
+                    if (res.status == 200) {
+                      window.location.reload();
+                    }
+                  });
+        }
+      // }
+      
+    } catch (error) {
+      Swal.fire({
+        text:'Ada error! Coba lagi dalam beberapa saat',
+        icon:'error'
+    })
     }
+    setLoading(true);
   }
 
   
@@ -128,6 +154,14 @@ export default function AuthModal(props) {
         centered
 
       >
+        
+        {loading &&
+        <div style={{position:"absolute", top:"50%", left:"47%", zIndex:100}}>
+          <Spinner animation="border" role="status">
+            <span className="sr-only">Loading...</span>
+          </Spinner>
+
+        </div>}
         <Modal.Header  closeButton>
           <Modal.Title id="contained-modal-title-vcenter">
            <div style={{fontSize:"25px", color:"#15533E",fontWeight:"bold", padding:"1% 0"}}>

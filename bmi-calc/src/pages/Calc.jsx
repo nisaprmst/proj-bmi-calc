@@ -37,6 +37,9 @@ class Calc extends Component {
           })
     }
 
+    componentDidMount = () =>{
+        document.title = "Kalkulator BMI"
+    }
     
     render() { 
         return ( 

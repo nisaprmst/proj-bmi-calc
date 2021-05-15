@@ -15,16 +15,16 @@ class NavBar extends Component {
                       <Navbar.Collapse id="responsive-navbar-nav">
                         <Nav className="mr-auto" >
                             <Nav.Link href="/definisi"  style={{color:"white"}}> Definisi </Nav.Link>
-
                             <Nav.Link href="/deskripsiumum"  style={{color:"white"}} > Informasi Umum </Nav.Link>
                             <Nav.Link href="/calculator"  style={{color:"white"}}> Hitung BMI </Nav.Link>
-                            <Nav.Link  style={{color:"white"}}> Chat dengan Apoteker </Nav.Link>
-                            <Nav.Link href="/faq" style={{color:"white"}} > FAQ </Nav.Link>        
+                            <Nav.Link href="/faq" style={{color:"white"}} > FAQ </Nav.Link>
+                      {this.props.isAdmin && 
+                            <Nav.Link href="/userlog" style={{color:"white"}}> User Log</Nav.Link>}        
                         </Nav>
                         <Nav>
                         <Nav.Link href="/profil">
                             <div className="profile-pic">
-                                <AvatarImage src={"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRy8saQQFdwdBVPdZVPghDvmp5r_MmSE7PbNw&usqp=CAU"} size={"50px"}/>
+                                <AvatarImage src={"https://t4.ftcdn.net/jpg/00/64/67/63/360_F_64676383_LdbmhiNM6Ypzb3FM4PPuFP9rHe7ri8Ju.jpg"} size={"50px"}/>
 
                             </div>
                                 <p className="navbar-profile">Lihat profil</p>

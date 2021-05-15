@@ -12,7 +12,7 @@ class Posts extends Component {
 
     async fetchInfo() {
         const token = localStorage.getItem('token');
-        return fetch('http://localhost:8000/api/information', {
+        return fetch('http://localhost:5000/api/information', {
             mode: 'cors',
             headers: {
                 'Content-Type': 'application/json',
@@ -24,7 +24,7 @@ class Posts extends Component {
 
     async delete(id) {
         const token = localStorage.getItem('token');
-        return fetch('http://localhost:8000/api/information/delete',{
+        return fetch('http://localhost:5000/api/information/delete',{
             method: 'POST',
             mode: 'cors',
             headers: {
@@ -38,6 +38,7 @@ class Posts extends Component {
     }
 
     componentDidMount() {
+        document.title = "Deskripsi Umum"
         this.fetchInfo()
         .then(res => {
             if (res.status === 200) {

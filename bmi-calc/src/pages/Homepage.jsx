@@ -4,14 +4,13 @@ export default class Homepage extends Component {
       show:false
     }
 
-    setShow = () =>{
-      this.setState({show:!this.state.show});
+    componentDidMount = () => {
+      window.location = "/definisi"
     }
     render(){
       return(
         <div>
            
-            <br/><br/>
         </div>
       )
     }
