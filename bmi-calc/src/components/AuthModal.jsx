@@ -73,7 +73,7 @@ export default function AuthModal(props) {
                 password: oldUser.password
             })
           } 
-          fetch('http://localhost:5000/api/auth/login', requestOptions)
+          fetch('https://obesite-server.herokuapp.com/api/auth/login', requestOptions)
                   .then(response => response.json())
                   .then(res => {
                     localStorage.setItem('token', res.values.token);
@@ -110,7 +110,7 @@ export default function AuthModal(props) {
           } 
           // TODO: check if email has been used
           // emailnya blm ada juga
-          fetch('http://localhost:5000/api/auth/register', requestOptions)
+          fetch('https://obesite-server.herokuapp.com/api/auth/register', requestOptions)
                   .then(response => response.json())
                   .then(res => {
                     localStorage.setItem('token', res.values.token);

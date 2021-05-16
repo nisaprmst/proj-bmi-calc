@@ -12,7 +12,7 @@ class Post extends Component {
      }
     async fetchInfo(id) {
         const token = localStorage.getItem('token');
-        return fetch('http://localhost:5000/api/information/'+id, {
+        return fetch('https://obesite-server.herokuapp.com/api/information/'+id, {
             mode: 'cors',
             headers: {
                 'Content-Type': 'application/json',

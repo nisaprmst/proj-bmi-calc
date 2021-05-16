@@ -38,7 +38,7 @@ class Routers extends Component {
                     'x-access-token': token
                 }
               } 
-              fetch('http://localhost:5000/api/auth/verify', requestOptions)
+              fetch('https://obesite-server.herokuapp.com/api/auth/verify', requestOptions)
                       .then(response => response.json())
                       .then(res => {
                         if (res.values.auth) {

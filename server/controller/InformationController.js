@@ -12,9 +12,9 @@ router.get(
     function(req, res) {
         conn.query('SELECT * FROM informations', (err, result) => {
             if (err) {
-                response.error(err, 400, res)
+                return response.error(err, 400, res)
             } else {
-                response.ok(result.rows, res)
+                return response.ok(result.rows, res)
             }
         });
     }
@@ -31,9 +31,9 @@ router.post(
         let queryInsert = 'INSERT INTO informations (created_date, title, content, img_url) VALUES (' + '\'' + date + '\',\'' + title + '\',\'' + content + '\',\'' + img_url + '\')'
         conn.query(queryInsert , (err, result) => {
             if (err) {
-                response.error(err, 400, res)
+                return response.error(err, 400, res)
             } else {
-                response.ok(result, res)
+                return response.ok(result, res)
             }
         })
     }
@@ -47,9 +47,9 @@ router.get(
         let querySelect = 'SELECT * FROM informations WHERE id=' + id
         conn.query(querySelect, (err, result) => {
             if (err) {
-                response.error(err, 400, res)
+                return response.error(err, 400, res)
             } else {
-                response.ok(result.rows, res)
+                return response.ok(result.rows, res)
             }
         })
     }
@@ -63,9 +63,9 @@ router.post(
         let queryDelete = 'DELETE FROM informations WHERE id=' + id
         conn.query(queryDelete, (err, result) => {
             if (err) {
-                response.error(err, 400, res)
+                return response.error(err, 400, res)
             } else {
-                response.ok("Success deleting information " + id, res)
+                return response.ok("Success deleting information " + id, res)
             }
         })
     }

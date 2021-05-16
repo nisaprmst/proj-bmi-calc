@@ -43,7 +43,7 @@ class CMS extends Component {
 
     async postData(){
         const token = localStorage.getItem('token');
-        return fetch('http://localhost:8000/api/information/add',{
+        return fetch('https://obesite-server.herokuapp.com/api/information/add',{
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

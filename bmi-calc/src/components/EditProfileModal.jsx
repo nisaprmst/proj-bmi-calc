@@ -25,7 +25,7 @@ export default function EditProfileModal(props) {
           'x-access-token': token
        },
       } 
-      fetch('http://localhost:5000/api/user/info', requestOptions)
+      fetch('https://obesite-server.herokuapp.com/api/user/info', requestOptions)
         .then(response => response.json())
         .then(item => {
           if (mounted) {
@@ -65,7 +65,7 @@ export default function EditProfileModal(props) {
               newPassword: profile.password
           })
         } 
-        fetch('http://localhost:5000/api/user/change-password', requestOptions)
+        fetch('https://obesite-server.herokuapp.com/api/user/change-password', requestOptions)
           .then(response => response.json())
           .then(res => {
             if (res.status == 200) {
@@ -87,7 +87,7 @@ export default function EditProfileModal(props) {
               weight: profile.berat
           })
         } 
-        fetch('http://localhost:5000/api/user/update', requestOptions)
+        fetch('https://obesite-server.herokuapp.com/api/user/update', requestOptions)
           .then(response => response.json())
           .then(res => {
             if (res.status == 200) {
