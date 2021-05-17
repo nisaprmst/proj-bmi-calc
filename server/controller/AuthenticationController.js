@@ -92,10 +92,16 @@ router.post(
         });
       }
       // if monday and first login, delete all weight record
+      // TODO: if user just logged in after a week (not monday) 
       if (getDateTime.isTodayMonday() && firstLogin) {
         const deleteQuery = 'DELETE FROM weights WHERE id_user=' + user.rows[0].id;
         const deleted = await conn.query(deleteQuery);
         if (!deleted) return response.error("Error while deleting all weights data", 400, res);
+        // add weight to record
+        const input_date = getDateTime.getDayNumber();
+        const weightQUery = 'INSERT INTO weights (input_date, weight, id_user) VALUES (' + input_date + ',' + user.rows[0].weight + ',' + user.rows[0].id + ')'
+        const addWeight = await conn.query(weightQUery);
+        if (!addWeight) return response.error("Error adding weight record", 400, res);
       }
       // if user is found and password is valid
       // create a token

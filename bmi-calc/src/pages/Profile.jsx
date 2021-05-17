@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Button, Col, Container, Row } from 'react-bootstrap';
 import AvatarImage from '../components/AvatarImage';
 import EditProfileModal from '../components/EditProfileModal';
+import Graph from '../components/Graph';
 import Field from '../components/Field';
 
 class Profile extends Component {
@@ -12,7 +13,8 @@ class Profile extends Component {
             show: false,
             berat: 0,
             tinggi: 0,
-            name: "Name"
+            name: "Name",
+            isUser: true
         }
     }
     componentDidMount() {
@@ -25,20 +27,21 @@ class Profile extends Component {
         const requestOptions = {
             method: 'GET',
             headers: { 
-            'Content-Type': 'application/json',
-            'x-access-token': token
-        },
+                'Content-Type': 'application/json',
+                'x-access-token': token
+            },
         } 
         fetch('https://obesite-server.herokuapp.com/api/user/info', requestOptions)
             .then(response => response.json())
             .then(item => {
                 if (item.status === 200) {
-                this.setState({
-                    show: false,
-                    tinggi : item.values.height,
-                    berat : item.values.weight,
-                    name : item.values.name
-                });
+                    this.setState({
+                        show: false,
+                        tinggi : item.values.height,
+                        berat : item.values.weight,
+                        name : item.values.name,
+                        isUser : item.values.role === "USER"
+                    });
                 }
             })
             .catch(err => {});
@@ -121,7 +124,7 @@ class Profile extends Component {
 
                     Here's your progress!
                 </div>
-                   <input
+                   {/* <input
                    type="number"
                    name="berat"
                    onChange={(e)=>this.handleInput(e)}
@@ -141,8 +144,10 @@ class Profile extends Component {
                        padding:"0.4vmax 0.8vmax",
                        marginLeft:"12px"   
                 }}
-                   variant="success">Simpan</Button>
-
+                   variant="success">Simpan</Button> */}
+                {this.state.isUser &&
+                    <Graph />
+                }
                 <EditProfileModal show={this.state.show}  onHide={()=>this.setState({show:!this.state.show})} />
            </div>
          );
