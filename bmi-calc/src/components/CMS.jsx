@@ -3,7 +3,7 @@ import { EditorState, convertToRaw, convertFromRaw} from 'draft-js';
 import { Editor } from 'react-draft-wysiwyg';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import { stateToHTML } from 'draft-js-export-html';
-import { Form, Col, Row } from 'react-bootstrap';
+import { Form, Col, Row, Spinner } from 'react-bootstrap';
 import Swal from 'sweetalert2';
 
 const url ="http://obesite-server.herokuapp.com/api"
@@ -11,6 +11,7 @@ const url ="http://obesite-server.herokuapp.com/api"
 
 class CMS extends Component {
     state = {   
+        isLoading: false,
         editorState: EditorState.createEmpty(),
         post : {
             title: '',
@@ -32,6 +33,7 @@ class CMS extends Component {
     onEditorStateChange = (editorState) => {
         const contentState = editorState.getCurrentContent();
         this.setState({
+            ...this.state,
             editorState,
             post : {...this.state.post, 
                 content : stateToHTML(contentState)
@@ -54,9 +56,16 @@ class CMS extends Component {
         })
     }
     postNewData = () => {
-        console.log(this.state.post)
+        this.setState({
+            ...this.state,
+            isLoading: true
+        })
         this.postData()
         .then(response => {
+            this.setState({
+                ...this.state,
+                isLoading: false
+            })
             if (response.status === 200){
                 console.log(response);
                 Swal.fire({
@@ -71,6 +80,7 @@ class CMS extends Component {
                 })
             }
         })
+        
 
         
     }
@@ -106,6 +116,14 @@ class CMS extends Component {
         const { editorState } = this.state;
         return ( 
         <>
+         {this.state.isLoading &&
+        <div style={{position:"fixed", top:"50%", left:"47%", zIndex:100}}>
+          <Spinner animation="border" role="status">
+            <span className="sr-only">Loading...</span>
+          </Spinner>
+
+        </div>}
+        
         
         <div style={{minWidth:"300px",width:"60%", margin:"5% auto"}}>
             <Form onSubmit={this.handleSubmit}>
@@ -150,8 +168,7 @@ class CMS extends Component {
             }}
             
             />   
-         <h4>Editor content as HTML</h4>
-         <div  dangerouslySetInnerHTML={{__html: this.state.post.content}} />
+        
         </div>
         
 

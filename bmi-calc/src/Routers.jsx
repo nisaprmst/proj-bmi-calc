@@ -18,6 +18,8 @@ import ErrorPage from "./pages/404Error";
 import Post from "./components/Post";
 import Whatsapp from "./components/Whatsapp";
 import UserLog from "./pages/UserLog";
+import Swal from "sweetalert2";
+import { Spinner } from "react-bootstrap";
 
 const url ="http://obesite-server.herokuapp.com/api"
 
@@ -42,27 +44,47 @@ class Routers extends Component {
               fetch(url + '/auth/verify', requestOptions)
                       .then(response => response.json())
                       .then(res => {
+                          console.log(res)
                         if (res.values.auth) {
+                            if (res.values.role == "ADMIN"){
+                                this.setState({
+                                    ...this.state,
+                                    isAdmin:true
+                                })
+                            }
                             this.setState({
-                                hasLogin: true,
-                                isAdmin: false
+                                ...this.state,
+                                hasLogin: true
+                                
                             });
                             if(window.location.pathname=="/login"){
                                 this.props.history.push("/definisi")
 
                             }
                         } else {
+                            console.log(res.json())
                             this.props.history.push("/login");
                         }
                         
                       })
                       .catch(err => {
-                        localStorage.setItem('token', null);
-                        this.setState({
-                            hasLogin: false,
-                            isAdmin: false
-                        });
-                        this.props.history.push("/login");
+                         if(err.message.includes('auth')){
+                             localStorage.setItem('token', null);
+                             this.setState({
+                                 ...this.state,
+                                 hasLogin: false,
+                                 isAdmin: false
+                             });
+                             this.props.history.push("/login");
+
+                         }else {
+                             Swal.fire({
+                                 text:"There's something wrong, please try again later"
+                             })
+                             this.props.history.push("/error");
+                             
+                         }
+                          
                       });
         } else {
             this.props.history.push("/login");
@@ -70,19 +92,17 @@ class Routers extends Component {
     }
     componentDidMount = () => {
         this.checkLogin();
+   
     }
     render() { 
+
         return ( 
             <div style={{position:"relative"}}>
-                <NavBar show={this.state.hasLogin}/>
+                <NavBar show={this.state.hasLogin} isAdmin={this.state.isAdmin}/>
                 <Switch>
-                    {this.state.isAdmin &&
-                    <>
-                        <Route path="/addpost" component={CMS}/>
-                        <Route path="/userlog" component={UserLog} />
-                        </>
-                    }
-                    
+                
+                    <Route path="/addpost" component={(this.state.isAdmin ? CMS : ErrorPage)} />
+                    <Route path="/userlog" component={(this.state.isAdmin ? UserLog : ErrorPage)} />
                     <Route exact path="/" component={Homepage}/>
                     <Route path="/result" component={BMIResult}/>
                     <Route exact path="/deskripsiumum" children={<Posts isAdmin={this.state.isAdmin}/>} />
@@ -92,6 +112,7 @@ class Routers extends Component {
                     <Route path="/calculator" component={Calc} />
                     <Route path="/definisi" component={ WebDefinition} />
                     <Route path="/profil" component={Profile}/>
+                    <Route path="/error"  component={ErrorPage}/>
                     <Route  component={ErrorPage}/>
                     
                 </Switch>

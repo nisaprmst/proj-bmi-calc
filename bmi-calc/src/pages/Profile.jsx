@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Col, Container, Row } from 'react-bootstrap';
+import { Button, Col, Container, Row, Spinner } from 'react-bootstrap';
 import AvatarImage from '../components/AvatarImage';
 import EditProfileModal from '../components/EditProfileModal';
 import Field from '../components/Field';
@@ -10,6 +10,8 @@ class Profile extends Component {
         super(props);
 
         this.state = { 
+            isLoading: true,
+            username: '',
             show: false,
             berat: 0,
             tinggi: 0
@@ -33,10 +35,13 @@ class Profile extends Component {
             .then(response => response.json())
             .then(item => {
                 if (item.status === 200) {
+                    console.log(item.values)
                 this.setState({
-                    show: false,
+                    ...this.state, 
+                    username: item.values.username,
                     tinggi : item.values.height,
                     berat : item.values.weight,
+                    isLoading: false
                 });
                 }
             })
@@ -74,11 +79,18 @@ class Profile extends Component {
                     </Col>
                     <Col style={{ position:"relative"}}>
                         <div style={{position:"absolute", top:"50%", left:"5%", transform:"translateY(-50%)", msTransform:"translateY(-50%)", width:"90%"}}>
+                        {this.state.isLoading && <Spinner variant="dark" animation="border" role="status">
+                            <span className="sr-only">Loading...</span>
+                        </Spinner>}
+          
+                        
+                        {!this.state.isLoading && 
+                        <>
                         <div style={{
                                 color:"black",
                                 fontSize:"1.5vmax"
                             }}>
-                                Annisa Ayu Pramesti
+                                {this.state.username}
                             </div>
                         <div
                             style={{
@@ -110,6 +122,8 @@ class Profile extends Component {
                             onClick={()=>this.handleLogout()}>
                                 Logout
                             </Button>
+                            </>
+                        }
                         </div>
 
                     </Col>
