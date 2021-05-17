@@ -11,10 +11,10 @@ class Profile extends Component {
 
         this.state = { 
             isLoading: true,
-            username: '',
             show: false,
             berat: 0,
-            tinggi: 0
+            tinggi: 0,
+            name: "Name"
         }
     }
     componentDidMount() {
@@ -38,9 +38,9 @@ class Profile extends Component {
                     console.log(item.values)
                 this.setState({
                     ...this.state, 
-                    username: item.values.username,
                     tinggi : item.values.height,
                     berat : item.values.weight,
+                    name : item.values.username,
                     isLoading: false
                 });
                 }
@@ -90,7 +90,7 @@ class Profile extends Component {
                                 color:"black",
                                 fontSize:"1.5vmax"
                             }}>
-                                {this.state.username}
+                                {this.state.name}
                             </div>
                         <div
                             style={{
