@@ -22,6 +22,19 @@ router.get(
 );
 
 router.get(
+    '/delete-user',
+    VerifyToken,
+    function(req, res) {
+        conn.query('DELETE FROM users WHERE role=\'USER\'', (err, result) => {
+            if (err) {
+                return response.error(err, 400, res)
+            } else {
+                return response.ok("Success deleting all user", res)
+            }
+        })
+    }   
+);
+router.get(
     '/info',
     VerifyToken,
     function(req, res) {

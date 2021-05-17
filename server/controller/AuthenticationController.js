@@ -7,6 +7,7 @@ const conn = require(__root + 'helper/db');
 const getDateTime = require(__root + 'helper/date');
 const VerifyToken = require(__root + 'helper/verifyToken');
 const express = require("express");
+const e = require('express');
 const router = express.Router();
 
 
@@ -34,7 +35,7 @@ router.post(
           const result = {
               auth: true,
               token,
-              username: req.body.username
+              role: 'USER'
           }
           return response.ok(result, res);
         } else {
@@ -72,7 +73,9 @@ router.post(
       }
       // check log date
       const todayDate = getDateTime.getDate();
+      let firstLogin = false;
       if (!getDateTime.isDateNow(user.rows[0].log_date)) {
+        firstLogin = true;
         const query = 'UPDATE users SET log_date=\'' + todayDate + '\', log_count=' + 1 + ' WHERE username=\'' + req.body.username + '\'';
         conn.query(query, (err, result) => {
           if (err) {
@@ -88,6 +91,12 @@ router.post(
           }
         });
       }
+      // if monday and first login, delete all weight record
+      if (getDateTime.isTodayMonday() && firstLogin) {
+        const deleteQuery = 'DELETE FROM weights WHERE id_user=' + user.rows[0].id;
+        const deleted = await conn.query(deleteQuery);
+        if (!deleted) return response.error("Error while deleting all weights data", 400, res);
+      }
       // if user is found and password is valid
       // create a token
       const token = jwt.sign({ username: req.body.username }, config.secret, {
@@ -98,7 +107,7 @@ router.post(
           let result = {
               auth: true,
               token,
-              username: req.body.username
+              role: user.rows[0].role
           }
           return response.ok(result, res);
       } else {
@@ -127,7 +136,8 @@ router.get(
   function(req, res) {
     let result = {
         auth: true,
-        token: req.headers["x-access-token"]
+        token: req.headers["x-access-token"],
+        role: req.user.role
     };
     return response.ok(result, res);
   }

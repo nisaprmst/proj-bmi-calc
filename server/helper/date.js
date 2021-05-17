@@ -1,35 +1,50 @@
 exports.getDateTime = function() {
-    let now     = new Date(); 
-    let year    = now.getFullYear();
-    let month   = now.getMonth()+1; 
-    let day     = now.getDate();
-    let hour    = now.getHours();
-    let minute  = now.getMinutes();
-    let second  = now.getSeconds(); 
-    if(month.toString().length == 1) {
-         month = '0'+month;
-    }
-    if(day.toString().length == 1) {
-         day = '0'+day;
-    }   
-    if(hour.toString().length == 1) {
-         hour = '0'+hour;
-    }
-    if(minute.toString().length == 1) {
-         minute = '0'+minute;
-    }
-    if(second.toString().length == 1) {
-         second = '0'+second;
-    }   
-    let dateTime = year+'-'+month+'-'+day+' '+hour+':'+minute+':'+second;   
-    return dateTime;
+     let now     = new Date(); 
+     let wib     = now.getTime() + (now.getTimezoneOffset() * 60000);
+     let nowWIB  = new Date(wib + (3600000*7));
+     let year    = nowWIB.getFullYear();
+     let month   = nowWIB.getMonth()+1; 
+     let day     = nowWIB.getDate();
+     let hour    = nowWIB.getHours();
+     let minute  = nowWIB.getMinutes();
+     let second  = nowWIB.getSeconds(); 
+     if(month.toString().length == 1) {
+          month = '0'+month;
+     }
+     if(day.toString().length == 1) {
+          day = '0'+day;
+     }   
+     if(hour.toString().length == 1) {
+          hour = '0'+hour;
+     }
+     if(minute.toString().length == 1) {
+          minute = '0'+minute;
+     }
+     if(second.toString().length == 1) {
+          second = '0'+second;
+     }   
+     let dateTime = year+'-'+month+'-'+day+' '+hour+':'+minute+':'+second;   
+     return dateTime;
+}
+
+exports.isTodayMonday = function() {
+     let now = new Date();
+     let wib = now.getTime() + (now.getTimezoneOffset() * 60000);
+
+     // create new Date object for different city
+     // using supplied offset
+     let nowWIB = new Date(wib + (3600000*7));
+     let day = nowWIB.getDay();
+     return day === 1;
 }
 
 exports.getDate = function() {
      let now     = new Date(); 
-     let year    = now.getFullYear();
-     let month   = now.getMonth()+1; 
-     let day     = now.getDate();
+     let wib     = now.getTime() + (now.getTimezoneOffset() * 60000);
+     let nowWIB  = new Date(wib + (3600000*7));
+     let year    = nowWIB.getFullYear();
+     let month   = nowWIB.getMonth()+1; 
+     let day     = nowWIB.getDate();
      if(month.toString().length == 1) {
           month = '0'+month;
      }
@@ -42,9 +57,11 @@ exports.getDate = function() {
 
 exports.isDateNow = function(now) {
      let dateNow = new Date();
-     let year    = dateNow.getFullYear();
-     let month   = dateNow.getMonth()+1; 
-     let day     = dateNow.getDate();
+     let wib     = dateNow.getTime() + (now.getTimezoneOffset() * 60000);
+     let nowWIB  = new Date(wib + (3600000*7));
+     let year    = nowWIB.getFullYear();
+     let month   = nowWIB.getMonth()+1; 
+     let day     = nowWIB.getDate();
      month = month.toString();
      day = day.toString();
      year = year.toString();

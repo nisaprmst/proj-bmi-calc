@@ -42,9 +42,12 @@ class Routers extends Component {
                       .then(response => response.json())
                       .then(res => {
                         if (res.values.auth) {
+                            const admin = res.values.role === "ADMIN";
+                            console.log(admin);
+                            console.log(res.values.role);
                             this.setState({
                                 hasLogin: true,
-                                isAdmin: false
+                                isAdmin: admin
                             });
                             if(window.location.pathname=="/login"){
                                 this.props.history.push("/definisi")

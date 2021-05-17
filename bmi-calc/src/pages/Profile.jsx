@@ -11,7 +11,8 @@ class Profile extends Component {
         this.state = { 
             show: false,
             berat: 0,
-            tinggi: 0
+            tinggi: 0,
+            name: "Name"
         }
     }
     componentDidMount() {
@@ -36,6 +37,7 @@ class Profile extends Component {
                     show: false,
                     tinggi : item.values.height,
                     berat : item.values.weight,
+                    name : item.values.name
                 });
                 }
             })
@@ -77,7 +79,7 @@ class Profile extends Component {
                                 color:"black",
                                 fontSize:"1.5vmax"
                             }}>
-                                Annisa Ayu Pramesti
+                                {this.state.name}
                             </div>
                         <div
                             style={{
