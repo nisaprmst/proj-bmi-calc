@@ -13,9 +13,9 @@ router.get(
     function(req, res) {
         conn.query('SELECT * FROM users', (err, result) => {
             if (err) {
-                response.error(err, 400, res)
+                return response.error(err, 400, res)
             } else {
-                response.ok(result.rows, res)
+                return response.ok(result.rows, res)
             }
         })
     }   
@@ -25,7 +25,7 @@ router.get(
     '/info',
     VerifyToken,
     function(req, res) {
-        response.ok(req.user, res)
+        return response.ok(req.user, res)
     }   
 );
 
@@ -37,13 +37,13 @@ router.put(
             const query = 'UPDATE users SET height=' + req.body.height + ', weight=' + req.body.weight + ' WHERE username=\'' + req.user.username + '\'';
             conn.query(query, (err, result) => {
                 if (err) {
-                    response.error("weight or height not valid", 400, res);
+                    return response.error("weight or height not valid", 400, res);
                 } else {
-                    response.ok('Success update user weight and height', res);
+                    return response.ok('Success update user weight and height', res);
                 }
             })
         } catch (error) {
-            response.error("Error while updating profil", 400, res);
+            return response.error("Error while updating profil", 400, res);
         }
     }
 )
@@ -58,13 +58,13 @@ router.put(
             const query = 'UPDATE users SET password=\'' + hashedPassword + '\'' + ' WHERE username=\'' + req.user.username + '\'';
             conn.query(query, (err, result) => {
                 if (err) {
-                    response.error("password not valid", 400, res);
+                    return response.error("password not valid", 400, res);
                 } else {
-                    response.ok('Success update password', res);
+                    return response.ok('Success update password', res);
                 }
             })
         } catch (error) {
-            response.error("Error while updating password", 400, res);
+            return response.error("Error while updating password", 400, res);
         }
     }
 )
