@@ -1,6 +1,9 @@
 import React, { Component, useEffect, useState } from 'react';
 import {Spinner} from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+
+const url ="http://obesite-server.herokuapp.com/api"
+
 class Post extends Component {
     state = { 
         data: [],
@@ -12,7 +15,7 @@ class Post extends Component {
      }
     async fetchInfo(id) {
         const token = localStorage.getItem('token');
-        return fetch('http://localhost:5000/api/information/'+id, {
+        return fetch(url + '/information/'+id, {
             mode: 'cors',
             headers: {
                 'Content-Type': 'application/json',

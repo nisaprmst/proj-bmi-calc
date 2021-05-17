@@ -19,6 +19,7 @@ import Post from "./components/Post";
 import Whatsapp from "./components/Whatsapp";
 import UserLog from "./pages/UserLog";
 
+const url ="http://obesite-server.herokuapp.com/api"
 
 
 class Routers extends Component {
@@ -38,7 +39,7 @@ class Routers extends Component {
                     'x-access-token': token
                 }
               } 
-              fetch('http://localhost:5000/api/auth/verify', requestOptions)
+              fetch(url + '/auth/verify', requestOptions)
                       .then(response => response.json())
                       .then(res => {
                         if (res.values.auth) {

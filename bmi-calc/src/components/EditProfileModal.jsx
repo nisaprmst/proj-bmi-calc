@@ -3,6 +3,7 @@ import { Modal, Button, Form, Col, Row } from "react-bootstrap";
 import AvatarImage from "./AvatarImage";
 
 import swal from 'sweetalert2';
+const url = 'http://obesite-server.herokuapp.com/api';
 
 export default function EditProfileModal(props) {
     
@@ -25,7 +26,7 @@ export default function EditProfileModal(props) {
           'x-access-token': token
        },
       } 
-      fetch('http://localhost:5000/api/user/info', requestOptions)
+      fetch(url + '/user/info', requestOptions)
         .then(response => response.json())
         .then(item => {
           if (mounted) {
@@ -65,7 +66,7 @@ export default function EditProfileModal(props) {
               newPassword: profile.password
           })
         } 
-        fetch('http://localhost:5000/api/user/change-password', requestOptions)
+        fetch(url + '/user/change-password', requestOptions)
           .then(response => response.json())
           .then(res => {
             if (res.status == 200) {
@@ -87,7 +88,7 @@ export default function EditProfileModal(props) {
               weight: profile.berat
           })
         } 
-        fetch('http://localhost:5000/api/user/update', requestOptions)
+        fetch(url + '/user/update', requestOptions)
           .then(response => response.json())
           .then(res => {
             if (res.status == 200) {

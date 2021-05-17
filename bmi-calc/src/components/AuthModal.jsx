@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Modal, Button, Form, Col, Row, Spinner } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 import Swal from "sweetalert2";
+const url = 'http://obesite-server.herokuapp.com/api'
 const signup = {
     username: '',
     password: '',
@@ -73,7 +74,7 @@ export default function AuthModal(props) {
                 password: oldUser.password
             })
           } 
-          fetch('http://localhost:5000/api/auth/login', requestOptions)
+          fetch( url +'/auth/login', requestOptions)
                   .then(response => response.json())
                   .then(res => {
                     localStorage.setItem('token', res.values.token);
@@ -110,7 +111,7 @@ export default function AuthModal(props) {
           } 
           // TODO: check if email has been used
           // emailnya blm ada juga
-          fetch('http://localhost:5000/api/auth/register', requestOptions)
+          fetch( url + '/auth/register', requestOptions)
                   .then(response => response.json())
                   .then(res => {
                     localStorage.setItem('token', res.values.token);
@@ -118,6 +119,13 @@ export default function AuthModal(props) {
                     if (res.status == 200) {
                       window.location.reload();
                     }
+                  })
+                  .catch(err => {
+                    Swal.fire({
+                      text :"Ada error! Coba lagi dalam beberapa saat",
+                      icon:"error"
+                    })
+                    setLoading(false)
                   });
         }
       // }

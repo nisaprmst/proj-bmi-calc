@@ -3,6 +3,7 @@ import { Button, Col, Container, Row } from 'react-bootstrap';
 import AvatarImage from '../components/AvatarImage';
 import EditProfileModal from '../components/EditProfileModal';
 import Field from '../components/Field';
+const url ="http://obesite-server.herokuapp.com/api"
 
 class Profile extends Component {
     constructor(props) {
@@ -28,7 +29,7 @@ class Profile extends Component {
             'x-access-token': token
         },
         } 
-        fetch('http://localhost:5000/api/user/info', requestOptions)
+        fetch(url + '/user/info', requestOptions)
             .then(response => response.json())
             .then(item => {
                 if (item.status === 200) {
@@ -53,7 +54,7 @@ class Profile extends Component {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' }
           } 
-          fetch('http://localhost:5000/api/auth/logout', requestOptions)
+          fetch(url + '/auth/logout', requestOptions)
                   .then(response => response.json())
                   .then(res => {
                     localStorage.setItem('token', res.values.token);
