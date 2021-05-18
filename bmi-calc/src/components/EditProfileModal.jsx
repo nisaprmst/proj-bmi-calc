@@ -1,15 +1,17 @@
 import { useState, useEffect } from "react";
-import { Modal, Button, Form, Col, Row } from "react-bootstrap";
+import { Modal, Button, Form, Col, Row, Spinner } from "react-bootstrap";
 import AvatarImage from "./AvatarImage";
 
 import swal from 'sweetalert2';
-const url = 'http://obesite-server.herokuapp.com/api';
+import Swal from "sweetalert2";
+const url ="https://obesite-server.herokuapp.com/api"
 
 export default function EditProfileModal(props) {
     
     const [image, setImage] = useState('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRy8saQQFdwdBVPdZVPghDvmp5r_MmSE7PbNw&usqp=CAU');
     const [pass, showPassWord] = useState(false);
     const [profile, setProfile] = useState({
+      isLoading: false,
       tinggi: 0,
       berat: 0,
       password: 0,
@@ -32,6 +34,7 @@ export default function EditProfileModal(props) {
           if (mounted) {
             if (item.status === 200) {
               setProfile({
+                ...profile,
                 tinggi : item.values.height,
                 berat : item.values.weight,
               });
@@ -45,15 +48,16 @@ export default function EditProfileModal(props) {
   
     const handleInput = (e) =>{
         const {name, value} = e.target;
-        console.log(name)
         setProfile({...profile,
         [name] : value})
   
       
     }
     const handleSubmit = (e) => {
-      console.log("SUBMIT UPDATE");
       e.preventDefault();
+      setProfile({
+        ...profile, isLoading: true
+      })
       const token = localStorage.getItem('token');
       if (pass) {
         const requestOptions = {
@@ -92,14 +96,24 @@ export default function EditProfileModal(props) {
           .then(response => response.json())
           .then(res => {
             if (res.status == 200) {
+              Swal.fire({
+                text: "Profile berhasil diperbaharui!",
+                icon:"success",
+                showConfirmButton:false
+              })
               window.location.reload();
             }
           })
           .catch(err => {
+            Swal.fire({
+              text: "Ada yang salah! Coba lagi dalam beberapa saat.",
+              icon:"error",
+              showConfirmButton:false
+            })
             console.log("error");
           });
       }
-      console.log(`Form submitted`);    
+      setProfile({...profile, isLoading: false})
   
   }
     
@@ -123,6 +137,14 @@ export default function EditProfileModal(props) {
             </Modal.Title>
           </Modal.Header>
           <Modal.Body style={{  position:"relative"}}>
+          {profile.isLoading &&
+            <div style={{position:"absolute", top:"50%", left:"47%", zIndex:100}}>
+              <Spinner animation="border" role="status">
+                <span className="sr-only">Loading...</span>
+              </Spinner>
+
+            </div>}
+            
                 <Button variant="outline-secondary"
                         onClick={()=>{
                           if (pass){

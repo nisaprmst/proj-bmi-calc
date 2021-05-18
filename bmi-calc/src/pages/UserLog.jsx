@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import { Col, Row, Table } from 'react-bootstrap';
 class UserLog extends Component {
     state = {  }
+    componentDidMount = () => {
+        document.title = "User Log"
+    }
     render() { 
         const data = [
             {

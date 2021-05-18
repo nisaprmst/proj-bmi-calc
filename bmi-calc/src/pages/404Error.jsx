@@ -4,6 +4,7 @@ class ErrorPage extends Component {
     state = {  }
     componentDidMount() {
         document.body.style.color = "black";
+        document.title = "Error"
     }
     render() { 
         return ( 

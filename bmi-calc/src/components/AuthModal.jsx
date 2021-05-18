@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Modal, Button, Form, Col, Row, Spinner } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 import Swal from "sweetalert2";
-const url = 'http://obesite-server.herokuapp.com/api'
+const url ="https://obesite-server.herokuapp.com/api"
 const signup = {
     username: '',
     password: '',
@@ -115,7 +115,6 @@ export default function AuthModal(props) {
                   .then(response => response.json())
                   .then(res => {
                     localStorage.setItem('token', res.values.token);
-                    console.log(res);
                     if (res.status == 200) {
                       window.location.reload();
                     }
@@ -142,15 +141,23 @@ export default function AuthModal(props) {
   
   const button = 
      (
-      <div style={{padding:"2% 0 5% 0", textAlign:"center"}}>
+      <div style={{padding:"2% 0 0 0", textAlign:"center"}}>
       <button className="login-button" onClick={postData}>{props.buttonText1}</button> <br/>
-      <div style={{opacity:"0.6", padding:"1% 0"}}>or</div>
-      <button className="google-button">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/1200px-Google_%22G%22_Logo.svg.png" height={18}/>
-        &nbsp;&nbsp;	Continue with Google
-        </button>
+      
+     
      </div>
     );
+
+  const buttonGoogle = 
+  (
+    <div style={{textAlign:"center"}}>
+    <div style={{opacity:"0.6", padding:"1% 0"}}>or</div>
+    <button className="google-button">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/1200px-Google_%22G%22_Logo.svg.png" height={18}/>
+    &nbsp;&nbsp;	Continue with Google
+    </button>
+    </div>
+  );
   
     return (
       
@@ -205,8 +212,10 @@ export default function AuthModal(props) {
                 </Row>
               </Form.Group>
               {button}
+              
             </Form>
             }
+            {buttonGoogle}
           </div>
             
            

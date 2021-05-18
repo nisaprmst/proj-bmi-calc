@@ -4,7 +4,7 @@ import {IoAddOutline} from 'react-icons/io5';
 import { Link } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import Post from '../components/Post';
-const url ="http://obesite-server.herokuapp.com/api"
+const url ="https://obesite-server.herokuapp.com/api"
 
 class Posts extends Component {
     state = { 

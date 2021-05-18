@@ -2,8 +2,7 @@ import React, { Component } from 'react';
 import { Button, Col, Container, Row, Spinner } from 'react-bootstrap';
 import AvatarImage from '../components/AvatarImage';
 import EditProfileModal from '../components/EditProfileModal';
-import Field from '../components/Field';
-const url ="http://obesite-server.herokuapp.com/api"
+const url ="https://obesite-server.herokuapp.com/api"
 
 class Profile extends Component {
     constructor(props) {

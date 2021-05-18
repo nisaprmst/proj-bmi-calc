@@ -2,7 +2,7 @@ import React, { Component, useEffect, useState } from 'react';
 import {Spinner} from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
-const url ="http://obesite-server.herokuapp.com/api"
+const url ="https://obesite-server.herokuapp.com/api"
 
 class Post extends Component {
     state = { 
@@ -80,7 +80,10 @@ class Post extends Component {
             {!this.state.isLoading && 
             <>
                 <div style={{fontSize:"40px"}}>
-                    {this.state.data.title}
+                    <Link style={{textDecoration:"none"}} to={{pathname:'/deskripsiumum/'+this.props.id}} >
+
+                        {this.state.data.title}
+                    </Link>
                 </div>
                 <div style={{fontWeight:"lighter"}}>
                     {this.state.date}   {this.state.time}

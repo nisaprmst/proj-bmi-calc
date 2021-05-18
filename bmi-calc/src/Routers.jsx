@@ -19,15 +19,15 @@ import Post from "./components/Post";
 import Whatsapp from "./components/Whatsapp";
 import UserLog from "./pages/UserLog";
 import Swal from "sweetalert2";
-import { Spinner } from "react-bootstrap";
+import { Loading } from "./components/Loading";
 
-const url ="http://obesite-server.herokuapp.com/api"
+const url ="https://obesite-server.herokuapp.com/api"
 
 
 class Routers extends Component {
     state = { 
-        hasLogin: false,
-        isAdmin: false
+        hasLogin: null,
+        isAdmin: null
     }
     
     
@@ -44,7 +44,6 @@ class Routers extends Component {
               fetch(url + '/auth/verify', requestOptions)
                       .then(response => response.json())
                       .then(res => {
-                          console.log(res)
                         if (res.values.auth) {
                             if (res.values.role == "ADMIN"){
                                 this.setState({
@@ -54,6 +53,7 @@ class Routers extends Component {
                             }
                             this.setState({
                                 ...this.state,
+                                isAdmin:false,
                                 hasLogin: true
                                 
                             });
@@ -62,7 +62,6 @@ class Routers extends Component {
 
                             }
                         } else {
-                            console.log(res.json())
                             this.props.history.push("/login");
                         }
                         
@@ -78,6 +77,10 @@ class Routers extends Component {
                              this.props.history.push("/login");
 
                          }else {
+                             this.setState({
+                                 ...this.state,
+                                 hasLogin: false
+                             })
                              Swal.fire({
                                  text:"There's something wrong, please try again later"
                              })
@@ -95,14 +98,15 @@ class Routers extends Component {
    
     }
     render() { 
-
         return ( 
+            <>  
+            {this.state.hasLogin == null ? <Loading/> :
             <div style={{position:"relative"}}>
                 <NavBar show={this.state.hasLogin} isAdmin={this.state.isAdmin}/>
                 <Switch>
                 
                     <Route path="/addpost" component={(this.state.isAdmin ? CMS : ErrorPage)} />
-                    <Route path="/userlog" component={(this.state.isAdmin ? UserLog : ErrorPage)} />
+                    <Route path="/userlog" component={(this.state.isAdmin== null ? Loading : this.state.isAdmin == true ? UserLog : ErrorPage)} />
                     <Route exact path="/" component={Homepage}/>
                     <Route path="/result" component={BMIResult}/>
                     <Route exact path="/deskripsiumum" children={<Posts isAdmin={this.state.isAdmin}/>} />
@@ -120,7 +124,8 @@ class Routers extends Component {
                 <div style={{position:"fixed", bottom:"2vmax", right:"2vmax"}}>
                     <Whatsapp/>
                 </div>}
-            </div>
+            </div>}
+            </>
          );
     }
 }

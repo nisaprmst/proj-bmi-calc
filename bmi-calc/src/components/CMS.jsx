@@ -6,7 +6,7 @@ import { stateToHTML } from 'draft-js-export-html';
 import { Form, Col, Row, Spinner } from 'react-bootstrap';
 import Swal from 'sweetalert2';
 
-const url ="http://obesite-server.herokuapp.com/api"
+const url ="https://obesite-server.herokuapp.com/api"
 
 
 class CMS extends Component {
@@ -67,7 +67,6 @@ class CMS extends Component {
                 isLoading: false
             })
             if (response.status === 200){
-                console.log(response);
                 Swal.fire({
                     text:'Post berhasil ditambah!',
                     icon:'success'
