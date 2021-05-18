@@ -38,15 +38,23 @@ class Profile extends Component {
             .then(item => {
                 if (item.status === 200) {
                     this.setState({
+                        ...this.state,
                         show: false,
                         tinggi : item.values.height,
                         berat : item.values.weight,
-                        name : item.values.name,
+                        name : item.values.username,
                         isUser : item.values.role === "USER"
                     });
                 }
             })
-            .catch(err => {});
+            .catch(err => {
+                console.log(err)
+            });
+
+        this.setState({
+            ...this.state,
+            isLoading:false
+        })
     }
     handleInput = (e) => {
         const {name, value} = e.target;

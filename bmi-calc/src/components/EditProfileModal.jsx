@@ -56,7 +56,7 @@ export default function EditProfileModal(props) {
     }
     const handleSubmit = (e) => {
       e.preventDefault();
-      setloading(true);
+      setLoading(true)
       const token = localStorage.getItem('token');
       if (pass) {
         const requestOptions = {
@@ -73,11 +73,22 @@ export default function EditProfileModal(props) {
           .then(response => response.json())
           .then(res => {
             if (res.status == 200) {
+              Swal.fire({
+                text: "Profile berhasil diperbaharui!",
+                icon:"success",
+                showConfirmButton:false
+              })
               window.location.reload();
+            } else {
+              throw res.status
             }
           })
           .catch(err => {
-            console.log("error");
+            Swal.fire({
+              text: "Ada yang salah! Coba lagi dalam beberapa saat.",
+              icon:"error",
+              showConfirmButton:false
+            })
           });
       } else {
         const requestOptions = {
@@ -101,7 +112,10 @@ export default function EditProfileModal(props) {
                 showConfirmButton:false
               })
               window.location.reload();
+            } else {
+              throw res.status
             }
+            
           })
           .catch(err => {
             Swal.fire({
@@ -112,7 +126,7 @@ export default function EditProfileModal(props) {
             console.log("error");
           });
       }
-      setloading(false)
+      setLoading(false)
   
   }
     
@@ -136,7 +150,7 @@ export default function EditProfileModal(props) {
             </Modal.Title>
           </Modal.Header>
           <Modal.Body style={{  position:"relative"}}>
-          {profile.isLoading &&
+          {loading &&
             <div style={{position:"absolute", top:"50%", left:"47%", zIndex:100}}>
               <Spinner animation="border" role="status">
                 <span className="sr-only">Loading...</span>
