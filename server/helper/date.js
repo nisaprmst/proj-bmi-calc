@@ -53,8 +53,18 @@ exports.getDate = function() {
      }   
      let date = year+'-'+month+'-'+day;   
      return date;
- }
-
+}
+exports.getDayNumber = function() {
+     let now     = new Date(); 
+     let wib     = now.getTime() + (now.getTimezoneOffset() * 60000);
+     let nowWIB  = new Date(wib + (3600000*7));
+     let day = nowWIB.getDay();
+     day = day-1;
+     if (day == -1) {
+          day = 6; // sunday
+     }
+     return date.toString();
+}
 exports.isDateNow = function(now) {
      let dateNow = new Date();
      let wib     = dateNow.getTime() + (now.getTimezoneOffset() * 60000);

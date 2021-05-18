@@ -135,7 +135,7 @@ export default function AuthModal(props) {
         icon:'error'
     })
     }
-    setLoading(true);
+    setLoading(false);
   }
 
   

@@ -10,8 +10,9 @@ export default function EditProfileModal(props) {
     
     const [image, setImage] = useState('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRy8saQQFdwdBVPdZVPghDvmp5r_MmSE7PbNw&usqp=CAU');
     const [pass, showPassWord] = useState(false);
+    const [loading, setLoading] = useState(false)
+
     const [profile, setProfile] = useState({
-      isLoading: false,
       tinggi: 0,
       berat: 0,
       password: 0,
@@ -55,9 +56,7 @@ export default function EditProfileModal(props) {
     }
     const handleSubmit = (e) => {
       e.preventDefault();
-      setProfile({
-        ...profile, isLoading: true
-      })
+      setloading(true);
       const token = localStorage.getItem('token');
       if (pass) {
         const requestOptions = {
@@ -113,7 +112,7 @@ export default function EditProfileModal(props) {
             console.log("error");
           });
       }
-      setProfile({...profile, isLoading: false})
+      setloading(false)
   
   }
     

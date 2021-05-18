@@ -45,16 +45,18 @@ router.get(
 router.put(
     '/update',
     VerifyToken,
-    function(req, res) {
+    async function(req, res) {
         try {
             const query = 'UPDATE users SET height=' + req.body.height + ', weight=' + req.body.weight + ' WHERE username=\'' + req.user.username + '\'';
-            conn.query(query, (err, result) => {
-                if (err) {
-                    return response.error("weight or height not valid", 400, res);
-                } else {
-                    return response.ok('Success update user weight and height', res);
-                }
-            })
+            const updated = await conn.query(query);
+            if (!updated) return response.error("weight or height not valid", 400, res);
+
+            const input_date = getDateTime.getDayNumber();
+            const weightQUery = 'INSERT INTO weights (input_date, weight, id_user) VALUES (' + input_date + ',' + req.body.weight + ',' + req.user.id + ')'
+            const addWeight = await conn.query(weightQUery);
+            if (!addWeight) return response.error("Error adding weight record", 400, res);
+
+            return response.ok('Success update user weight and height', res);
         } catch (error) {
             return response.error("Error while updating profil", 400, res);
         }
