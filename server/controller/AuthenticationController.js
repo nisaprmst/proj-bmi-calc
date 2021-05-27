@@ -9,6 +9,8 @@ const VerifyToken = require(__root + 'helper/verifyToken');
 const express = require("express");
 const e = require('express');
 const router = express.Router();
+const { OAuth2Client } = require('google-auth-library');
+const client = new OAuth2Client(process.env.CLIENT_ID);
 
 
 router.post(
@@ -25,23 +27,29 @@ router.post(
       const date = getDateTime.getDate()
       const values = '(' + '\'' + req.body.username + '\',\'' + req.body.email + '\',\'' + hashedPassword + '\',\'' + req.body.name + '\',\'' + req.body.birth_date + '\',\'' + req.body.height + '\',\'' + req.body.weight + '\',\'' + "USER" + '\',\'' + date + '\',' + 1 + ')';
       const queryInsert = 'INSERT INTO users (username, email, password, name, birth_date, height, weight, role, log_date, log_count) VALUES ' + values;
-      conn.query(queryInsert,  (err, user) => {
-        if (err) response.error(values, 401, res);
-        // create a token
-        const token = jwt.sign({ username: req.body.username }, config.secret, {
-          expiresIn: 86400 // expires in 24 hours
-        });
-        if (token) {
-          const result = {
-              auth: true,
-              token,
-              role: 'USER'
-          }
-          return response.ok(result, res);
-        } else {
-          return response.error('Error token', 401, res);
+      const insert = await conn.query(queryInsert);
+      if (!insert) return response.error("Error inserting user to database", 406, res);
+      const newUserQuery = 'SELECT * FROM users WHERE username=\'' + req.body.username + '\'';
+      const newUser = await conn.query(newUserQuery);
+      if (!newUser) return response.error("Error from database server", 401, res);
+      const input_date = getDateTime.getDayNumber();
+      const weightQUery = 'INSERT INTO weights (input_date, weight, id_user) VALUES (' + input_date + ',' + req.body.weight + ',' + newUser.rows[0].id + ')'
+      const addWeight = await conn.query(weightQUery);
+      if (!addWeight) return response.error("Error adding weight record", 400, res);
+      // create a token
+      const token = jwt.sign({ username: req.body.username }, config.secret, {
+        expiresIn: 86400 // expires in 24 hours
+      });
+      if (token) {
+        const result = {
+            auth: true,
+            token,
+            role: 'USER'
         }
-      }); 
+        return response.ok(result, res);
+      } else {
+        return response.error('Error token', 401, res);
+      }
     } catch (error) {
       return response.error("Error registering user", 401, res);
     }
@@ -51,13 +59,31 @@ router.post(
 router.post(
   '/login',
   async function (req, res) {
-    try {
-      console.log("Database_URL ", process.env.DATABASE_URL);
-      console.log("miar");
-      const checkUsernameQuery = 'SELECT * FROM users WHERE username=\'' + req.body.username + '\'';
-      const user = await conn.query(checkUsernameQuery);
+    console.log(req.body.token);
+    let user;
+    if (req.body.token) {
+      // auth google
+      const token = req.body.token;
+      const ticket = await client.verifyIdToken({
+        idToken: token,
+        audience: process.env.CLIENT_ID
+      });
+      const { email } = ticket.getPayload();    
+      const checkEmailQuery = 'SELECT * FROM users WHERE email=\'' + email + '\'';
+      user = await conn.query(checkEmailQuery);
       if (!user) return response.error("Error from database server", 401, res);
-      if (user.rows.length < 1) return response.error("No user found.", 401, res);
+    } else {
+      const checkUsernameQuery = 'SELECT * FROM users WHERE username=\'' + req.body.username + '\'';
+      user = await conn.query(checkUsernameQuery);
+      if (!user) return response.error("Error from database server", 401, res);
+      if (user.rows.length < 1)  {
+        const checkEmailQuery = 'SELECT * FROM users WHERE email=\'' + req.body.username + '\'';
+        user = await conn.query(checkEmailQuery);
+        if (!user) return response.error("Maaf, server sedang error.", 401, res);
+        if (user.rows.length < 1)  {
+          return response.error("Pengguna tidak ditemukan!", 401, res);
+        }
+      }
       const pass = user.rows[0].password;
       // check if the password is valid
       const passwordIsValid = bcrypt.compareSync(
@@ -69,8 +95,11 @@ router.post(
             auth: false,
             token: null
           }
-          return response.error(result, 401, res);
+          return response.error("Password salah!", 401, res);
       }
+    }
+    console.log(user);
+    try {
       // check log date
       const todayDate = getDateTime.getDate();
       let firstLogin = false;

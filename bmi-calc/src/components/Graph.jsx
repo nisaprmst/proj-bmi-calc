@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
 import CanvasJSReact from '../lib/canvasjs/canvasjs.react';
+// const url ="https://obesite-server.herokuapp.com/api"
+const url ="http://localhost:5000/api"
+
 class Graph extends Component {
     state = { 
         dataPoints : []
-     }
+    }
 
     componentDidMount(){
         let chart = this.chart;
@@ -15,7 +18,7 @@ class Graph extends Component {
                 'x-access-token': token
             },
         } 
-        fetch('https://obesite-server.herokuapp.com/api/weight', requestOptions)
+        fetch(url + '/weight', requestOptions)
             .then(response => response.json())
             .then(data => {
                 if (data.status === 200) {
