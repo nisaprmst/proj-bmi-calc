@@ -56,7 +56,8 @@ export default function EditProfileModal(props) {
     }
     const handleSubmit = (e) => {
       e.preventDefault();
-      setLoading(true)
+      // setLoading(true)
+      console.log(profile)
       const token = localStorage.getItem('token');
       if (pass) {
         const requestOptions = {
@@ -113,7 +114,7 @@ export default function EditProfileModal(props) {
               })
               window.location.reload();
             } else {
-              throw res.status
+              throw res
             }
             
           })
@@ -123,10 +124,10 @@ export default function EditProfileModal(props) {
               icon:"error",
               showConfirmButton:false
             })
-            console.log("error");
+            console.log(err);
           });
       }
-      setLoading(false)
+      // setLoading(false)
   
   }
     

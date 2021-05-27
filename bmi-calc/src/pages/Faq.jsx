@@ -32,7 +32,7 @@ class Faq extends Component {
             {
                 id: 5,
                 question: "Bagaimana memilih jenis diet yang tepat untuk tiap pasien obesitas?",
-                answers: "<tba>"
+                answers: "Memilih diet yang benar bisa dimulai dengan mengukur BMI terlebih dahulu. Setiap BMI yang didapat akan memiliki target penurunan berat badan masing-masing berdasarkan kelompoknya yaitu Obesitas, Overweight atau Normal. Memilih diet pun juga harus memerhatikan kondisi penyakit lain seperti penyakit kardiovaskular, diabetes, dan komorbid lainnya yang berkaitan dengan obesitas. Sehingga, dalam memilih diet yang benar memerlukan adanya arahan dari ahli nutrisi serta dokter yang bertanggung jawab agar tidak timbul hal-hal yang tidak diinginkan."
             },
             {
                 question: "Bagaimana mengatur jadwal yg sesuai dengan kesibukan sehari-hari dan pola diet yang benar?",
@@ -66,7 +66,7 @@ class Faq extends Component {
             {
                 id: 11,
                 question: "Bagaimana kalau punya pantangan terhadap makanan tertentu atau memiliki penyakit tertentu?",
-                answers: "11.	Hal tersebut memerlukan konsultasi ke dokter yang bertanggung jawab terlebih dahulu, seperti jika memiliki penyakit jantung maka dapat berkonsultasi ke dokter jantung, khawatir terdapat efek samping obat atau interaksi merugikan dengan diet yang sudah direncanakan."
+                answers: "Hal tersebut memerlukan konsultasi ke dokter yang bertanggung jawab terlebih dahulu, seperti jika memiliki penyakit jantung maka dapat berkonsultasi ke dokter jantung, khawatir terdapat efek samping obat atau interaksi merugikan dengan diet yang sudah direncanakan."
             }
         ]
         const faqTitle = require('../assets/images/Faq.png');

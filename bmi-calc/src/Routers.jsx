@@ -62,12 +62,18 @@ class Routers extends Component {
 
                             }
                         } else {
+                            
+                            this.setState({
+                                ...this.state,
+                                hasLogin: false,
+                                isAdmin: false
+                            });
                             this.props.history.push("/login");
                         }
                         
                       })
                       .catch(err => {
-                         if(err.message.includes('auth')){
+                    
                              localStorage.setItem('token', null);
                              this.setState({
                                  ...this.state,
@@ -76,20 +82,13 @@ class Routers extends Component {
                              });
                              this.props.history.push("/login");
 
-                         }else {
-                             this.setState({
-                                 ...this.state,
-                                 hasLogin: false
-                             })
-                             Swal.fire({
-                                 text:"There's something wrong, please try again later"
-                             })
-                             this.props.history.push("/error");
-                             
-                         }
-                          
                       });
         } else {
+            this.setState({
+                ...this.state,
+                hasLogin: false,
+                isAdmin: false
+            });
             this.props.history.push("/login");
         }
     }

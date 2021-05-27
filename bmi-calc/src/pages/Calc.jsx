@@ -20,17 +20,13 @@ class Calc extends Component {
         let bmiClass;
         if (bmi < 18.5){
             bmiClass = "Underweight";
-        } else if (bmi <= 22.9) {
-            bmiClass = "Normal";
         } else if (bmi <= 24.9) {
+            bmiClass = "Normal";
+        } else if (bmi <= 29.9) {
             bmiClass = "Overweight";
-        } else if (bmi <= 29.9){
-            bmiClass = "Obesitas I";
-        } else{
-            bmiClass = "Obesitas II";
-        }
-        console.log(bmi);
-        console.log(this.props);
+        } else if (bmi >= 30){
+            bmiClass = "Obesitas";
+        } 
         this.props.history.push({
             pathname: '/result',
             state: { bmi: bmi, bmiClass: bmiClass}
