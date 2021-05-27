@@ -63,7 +63,7 @@ exports.getDayNumber = function() {
      if (day == -1) {
           day = 6; // sunday
      }
-     return date.toString();
+     return day.toString();
 }
 exports.isDateNow = function(now) {
      let dateNow = new Date();

@@ -53,15 +53,14 @@ router.get(
                     });
                 }
             }
-            if (weights[weightsLen-1].input_date < 6) {
-                for (let p = weights[weightsLen-1].input_date+1; p < 7; p++) {
-                    ret.push({
-                        label : days[p],
-                        y : weights[weightsLen-1].weight
-                    });
-                }
-            }
-
+            // if (weights[weightsLen-1].input_date < 6) {
+            //     for (let p = weights[weightsLen-1].input_date+1; p < 7; p++) {
+            //         ret.push({
+            //             label : days[p],
+            //             y : weights[weightsLen-1].weight
+            //         });
+            //     }
+            // }
             return response.ok(ret, res);
         } catch (e) {
             return response.error("Error while getting all weights", 400, res);

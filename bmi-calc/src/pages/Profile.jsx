@@ -4,7 +4,8 @@ import AvatarImage from '../components/AvatarImage';
 import EditProfileModal from '../components/EditProfileModal';
 import Graph from '../components/Graph';
 import Field from '../components/Field';
-const url ="https://obesite-server.herokuapp.com/api"
+// const url ="https://obesite-server.herokuapp.com/api"
+const url ="http://localhost:5000/api"
 
 class Profile extends Component {
     constructor(props) {
@@ -42,8 +43,9 @@ class Profile extends Component {
                         show: false,
                         tinggi : item.values.height,
                         berat : item.values.weight,
-                        name : item.values.username,
-                        isUser : item.values.role === "USER"
+                        name : item.values.name,
+                        isUser : item.values.role === "USER",
+                        isLoading : false
                     });
                 }
             })

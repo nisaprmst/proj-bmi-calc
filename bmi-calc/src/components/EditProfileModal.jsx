@@ -4,13 +4,14 @@ import AvatarImage from "./AvatarImage";
 
 import swal from 'sweetalert2';
 import Swal from "sweetalert2";
-const url ="https://obesite-server.herokuapp.com/api"
+// const url ="https://obesite-server.herokuapp.com/api"
+const url ="http://localhost:5000/api"
 
 export default function EditProfileModal(props) {
     
     const [image, setImage] = useState('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRy8saQQFdwdBVPdZVPghDvmp5r_MmSE7PbNw&usqp=CAU');
     const [pass, showPassWord] = useState(false);
-    const [loading, setLoading] = useState(false)
+    const [loading, setLoading] = useState(false);
 
     const [profile, setProfile] = useState({
       tinggi: 0,
@@ -56,8 +57,7 @@ export default function EditProfileModal(props) {
     }
     const handleSubmit = (e) => {
       e.preventDefault();
-      // setLoading(true)
-      console.log(profile)
+      // setloading(true);
       const token = localStorage.getItem('token');
       if (pass) {
         const requestOptions = {
@@ -127,7 +127,7 @@ export default function EditProfileModal(props) {
             console.log(err);
           });
       }
-      // setLoading(false)
+      // setloading(false)
   
   }
     

@@ -2,10 +2,13 @@ import { useState } from "react";
 import { Modal, Button, Form, Col, Row, Spinner } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 import Swal from "sweetalert2";
-const url ="https://obesite-server.herokuapp.com/api"
+import { GoogleLogin } from 'react-google-login';
+// const url ="https://obesite-server.herokuapp.com/api";
+const url ="http://localhost:5000/api"
 const signup = {
     username: '',
     password: '',
+    email: '',
     namalengkap: '',
     tanggallahir: '',
     tinggi: undefined,
@@ -21,6 +24,7 @@ export default function AuthModal(props) {
   const [newUser, setNewUser] = useState({
     username: '',
     password: '',
+    email: '',
     namalengkap: '',
     tanggallahir: '',
     tinggi: undefined,
@@ -74,7 +78,7 @@ export default function AuthModal(props) {
                 password: oldUser.password
             })
           } 
-          fetch( url +'/auth/login', requestOptions)
+          fetch(url +'/auth/login', requestOptions)
                   .then(response => response.json())
                   .then(res => {
                     localStorage.setItem('token', res.values.token);
@@ -82,7 +86,7 @@ export default function AuthModal(props) {
                       window.location.reload();
                     } else{
                       Swal.fire({
-                        text:"Salah username atau password!",
+                        text:res.values,
                         icon:"error"
                       })
                       setLoading(false)
@@ -111,7 +115,95 @@ export default function AuthModal(props) {
           } 
           // TODO: check if email has been used
           // emailnya blm ada juga
-          fetch( url + '/auth/register', requestOptions)
+          fetch(url + '/auth/register', requestOptions)
+                  .then(response => response.json())
+                  .then(res => {
+                    localStorage.setItem('token', res.values.token);
+                    if (res.status == 200) {
+                      window.location.reload();
+                    } else {
+                      Swal.fire({
+                        text :res.values,
+                        icon:"error"
+                      })
+                    }
+                  })
+                  .catch(err => {
+                    Swal.fire({
+                      text :"Ada error! Coba lagi dalam beberapa saat",
+                      icon:"error"
+                    })
+                    setLoading(false)
+                  });
+        }
+      // }
+      
+    } catch (error) {
+      Swal.fire({
+        text:'Ada error! Coba lagi dalam beberapa saat',
+        icon:'error'
+    })
+    }
+    setLoading(false);
+  }
+
+  const handleGoogleError = async (e) => {
+    Swal.fire({
+      text:"Google auth gagal",
+      icon:"error"
+    })
+  }
+  const handleGoogleSubmit = async (e) => {
+    try {
+
+      setLoading(true);
+      // if (loading){
+        if (props.login) {
+          const requestOptions = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ 
+              token: e.tokenId
+            })
+          } 
+          fetch(url +'/auth/login', requestOptions)
+                  .then(response => response.json())
+                  .then(res => {
+                    localStorage.setItem('token', res.values.token);
+                    if (res.status == 200) {
+                      window.location.reload();
+                    } else{
+                      Swal.fire({
+                        text:res.values,
+                        icon:"error"
+                      })
+                      setLoading(false)
+                    }
+                  })
+                  .catch(err => {
+                    Swal.fire({
+                      text:"Ada error! Coba lagi dalam beberapa saat",
+                      icon:"error"
+                    })
+                    setLoading(false)
+                  })
+        } else {
+          const requestOptions = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ 
+                username: newUser.username,
+                password: newUser.password,
+                nama: newUser.namalengkap,
+                email: newUser.email,
+                birth_date: newUser.tanggallahir,
+                height: newUser.tinggi,
+                weight: newUser.berat
+            })
+          } 
+          // TODO: check if email has been used
+          // emailnya blm ada juga
+          fetch(url + '/auth/register', requestOptions)
                   .then(response => response.json())
                   .then(res => {
                     localStorage.setItem('token', res.values.token);
@@ -152,10 +244,14 @@ export default function AuthModal(props) {
   (
     <div style={{textAlign:"center"}}>
     <div style={{opacity:"0.6", padding:"1% 0"}}>or</div>
-    <button className="google-button">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/1200px-Google_%22G%22_Logo.svg.png" height={18}/>
-    &nbsp;&nbsp;	Continue with Google
-    </button>
+    <GoogleLogin
+    className="google-button"
+    clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
+    buttonText="Log in with Google"
+    onSuccess={handleGoogleSubmit}
+    onFailure={handleGoogleError}
+    cookiePolicy={'single_host_origin'}
+    />
     </div>
   );
   
@@ -199,6 +295,7 @@ export default function AuthModal(props) {
             <Form onSubmit={handleSubmit}>
               <Form.Group>
                 <Form.Control type="text" placeholder="Username" name="username" value={newUser.username} className="form-box" style={{marginBottom:"13px"}} onChange={(e) => handleNewUserInput(e)} onBlur={(e) => handleNewUserInput(e)} required/>
+                <Form.Control type="text" placeholder="Email" name="email" value={newUser.email} className="form-box" style={{marginBottom:"13px"}} onChange={(e) => handleNewUserInput(e)} onBlur={(e) => handleNewUserInput(e)} required/>
                 <Form.Control type="password" placeholder="Password" name="password" value={newUser.password} className="form-box" style={{marginBottom:"13px"}} onChange={(e) => handleNewUserInput(e)} onBlur={(e) => handleNewUserInput(e)} required/>
                 <Form.Control type="text" placeholder="Nama lengkap" className="form-box" name="namalengkap" value={newUser.namalengkap} style={{marginBottom:"13px"}} onChange={(e) => handleNewUserInput(e)} onBlur={(e) => handleNewUserInput(e)} required/>
                 <Form.Control type="date" placeholder="Tanggal lahir" className="form-box" name="tanggallahir" value={newUser.tanggallahir} style={{marginBottom:"13px"}} onChange={(e) => handleNewUserInput(e)}  onBlur={(e) => handleNewUserInput(e)} required/>
