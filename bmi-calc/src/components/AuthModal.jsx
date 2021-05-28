@@ -3,8 +3,8 @@ import { Modal, Button, Form, Col, Row, Spinner } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 import Swal from "sweetalert2";
 import { GoogleLogin } from 'react-google-login';
-// const url ="https://obesite-server.herokuapp.com/api";
-const url ="http://localhost:5000/api"
+const url ="https://obesite-server.herokuapp.com/api";
+// const url ="http://localhost:5000/api"
 const signup = {
     username: '',
     password: '',
@@ -266,13 +266,13 @@ export default function AuthModal(props) {
 
       >
         
-        {loading &&
+        {loading ?
         <div style={{position:"absolute", top:"50%", left:"47%", zIndex:100}}>
           <Spinner animation="border" role="status">
             <span className="sr-only">Loading...</span>
           </Spinner>
 
-        </div>}
+        </div> : <></>}
         <Modal.Header  closeButton>
           <Modal.Title id="contained-modal-title-vcenter">
            <div style={{fontSize:"25px", color:"#15533E",fontWeight:"bold", padding:"1% 0"}}>

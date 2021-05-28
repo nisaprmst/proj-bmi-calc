@@ -4,8 +4,8 @@ import {IoAddOutline} from 'react-icons/io5';
 import { Link } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import Post from '../components/Post';
-// const url ="https://obesite-server.herokuapp.com/api"
-const url ="http://localhost:5000/api"
+const url ="https://obesite-server.herokuapp.com/api"
+// const url ="http://localhost:5000/api"
 
 class Posts extends Component {
     state = { 
@@ -123,10 +123,10 @@ class Posts extends Component {
                             <th>Delete</th>
                         </thead>
                         <tbody>
-                           {(this.state.posts.map((item) => (
+                           {(this.state.posts.map((item, index) => (
                                <tr>
                                    <td>
-                                       {item.id}
+                                       {index+1}
                                    </td>
                                     <td style={{width:"60%"}}>
                                     <Link style={{ textDecoration: 'none' }} to={{pathname:"/deskripsiumum/"+(item.id)}}>

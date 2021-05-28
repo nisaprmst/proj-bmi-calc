@@ -21,8 +21,8 @@ import UserLog from "./pages/UserLog";
 import Swal from "sweetalert2";
 import { Loading } from "./components/Loading";
 
-// const url ="https://obesite-server.herokuapp.com/api"
-const url ="http://localhost:5000/api"
+const url ="https://obesite-server.herokuapp.com/api"
+// const url ="http://localhost:5000/api"
 
 
 class Routers extends Component {
@@ -45,19 +45,24 @@ class Routers extends Component {
               fetch(url + '/auth/verify', requestOptions)
                       .then(response => response.json())
                       .then(res => {
+                          console.log(res)
                         if (res.values.auth) {
                             if (res.values.role == "ADMIN"){
+                                console.log("hi")
                                 this.setState({
                                     ...this.state,
+                                    hasLogin:true,
                                     isAdmin:true
                                 })
+                            } else {
+
+                                this.setState({
+                                    ...this.state,
+                                    isAdmin:false,
+                                    hasLogin: true
+                                    
+                                });
                             }
-                            this.setState({
-                                ...this.state,
-                                isAdmin:false,
-                                hasLogin: true
-                                
-                            });
                             if(window.location.pathname=="/login"){
                                 this.props.history.push("/definisi")
 

@@ -58,6 +58,7 @@ router.put(
 
             return response.ok('Success update user weight and height', res);
         } catch (error) {
+            console.log(error)
             return response.error("Error while updating profil", 400, res);
         }
     }
