@@ -3,8 +3,8 @@ import { Modal, Button, Form, Col, Row, Spinner } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 import Swal from "sweetalert2";
 import { GoogleLogin } from 'react-google-login';
-// const url ="https://obesite-server.herokuapp.com/api";
-const url ="http://localhost:5000/api"
+const url ="https://obesite-server.herokuapp.com/api";
+// const url ="http://localhost:5000/api"
 const signup = {
     username: '',
     password: '',

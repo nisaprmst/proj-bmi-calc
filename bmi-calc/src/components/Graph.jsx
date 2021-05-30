@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import CanvasJSReact from '../lib/canvasjs/canvasjs.react';
-// const url ="https://obesite-server.herokuapp.com/api"
-const url ="http://localhost:5000/api"
+const url ="https://obesite-server.herokuapp.com/api"
+// const url ="http://localhost:5000/api"
 
 class Graph extends Component {
     state = { 

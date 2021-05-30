@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import {Spinner} from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
-// const url ="https://obesite-server.herokuapp.com/api"
-const url ="http://localhost:5000/api"
+const url ="https://obesite-server.herokuapp.com/api"
+// const url ="http://localhost:5000/api"
 
 class Post extends Component {
     state = { 

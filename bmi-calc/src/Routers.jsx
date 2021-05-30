@@ -21,8 +21,8 @@ import UserLog from "./pages/UserLog";
 import Swal from "sweetalert2";
 import { Loading } from "./components/Loading";
 
-// const url ="https://obesite-server.herokuapp.com/api"
-const url ="http://localhost:5000/api"
+const url ="https://obesite-server.herokuapp.com/api"
+// const url ="http://localhost:5000/api"
 
 
 class Routers extends Component {

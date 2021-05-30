@@ -4,8 +4,8 @@ import AvatarImage from '../components/AvatarImage';
 import EditProfileModal from '../components/EditProfileModal';
 import Graph from '../components/Graph';
 import Field from '../components/Field';
-// const url ="https://obesite-server.herokuapp.com/api"
-const url ="http://localhost:5000/api"
+const url ="https://obesite-server.herokuapp.com/api"
+// const url ="http://localhost:5000/api"
 
 class Profile extends Component {
     constructor(props) {
@@ -74,7 +74,7 @@ class Profile extends Component {
                   .then(response => response.json())
                   .then(res => {
                     localStorage.setItem('token', res.values.token);
-                    window.location.reload();
+                    window.location = '/login';
                   })
                   .then();
     }

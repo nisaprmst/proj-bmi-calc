@@ -112,7 +112,7 @@ router.post(
         const { email } = ticket.getPayload();    
         const checkEmailQuery = 'SELECT * FROM users WHERE email=\'' + email + '\'';
         user = await conn.query(checkEmailQuery);
-        if (!user) return response.error("Error from database server", 401, res);
+        if (user.rows.length < 1) return response.error("Pengguna tidak ditemukan!", 401, res);
       } else {
         const checkUsernameQuery = 'SELECT * FROM users WHERE username=\'' + req.body.username + '\'';
         user = await conn.query(checkUsernameQuery);
@@ -144,7 +144,7 @@ router.post(
       let firstLogin = false;
       if (!getDateTime.isDateNow(user.rows[0].log_date)) {
         firstLogin = true;
-        const query = 'UPDATE users SET log_date=\'' + todayDate + '\', log_count=' + 1 + ' WHERE username=\'' + req.body.username + '\'';
+        const query = 'UPDATE users SET log_date=\'' + todayDate + '\', log_count=' + 1 + ' WHERE username=\'' + user.rows[0].username + '\'';
         conn.query(query, (err, result) => {
           if (err) {
             return response.error("update log date and count failed", 400, res);
@@ -152,24 +152,23 @@ router.post(
         });
       } else {
         const newLog = user.rows[0].log_count + 1;
-        const query = 'UPDATE users SET log_count=' + newLog + ' WHERE username=\'' + req.body.username + '\'';
+        const query = 'UPDATE users SET log_count=' + newLog + ' WHERE username=\'' + user.rows[0].username + '\'';
         conn.query(query, (err, result) => {
           if (err) {
             return response.error("update log count failed", 400, res);
           }
         });
       }
-      // if monday and first login, delete all weight record
-      // TODO: if user just logged in after a week (not monday) 
+      // if monday and first login, update all weight record
       if (getDateTime.isTodayMonday() && firstLogin) {
-        const deleteQuery = 'DELETE FROM weights WHERE id_user=' + user.rows[0].id;
-        const deleted = await conn.query(deleteQuery);
-        if (!deleted) return response.error("Error while deleting all weights data", 400, res);
-        // add weight to record
-        const input_date = getDateTime.getDayNumber();
-        const weightQUery = 'INSERT INTO weights (input_date, weight, id_user) VALUES (' + input_date + ',' + user.rows[0].weight + ',' + user.rows[0].id + ')'
-        const addWeight = await conn.query(weightQUery);
-        if (!addWeight) return response.error("Error adding weight record", 400, res);
+        // get sunday weight
+        const getWeightQuery = 'SELECT * FROM weights WHERE id_user=' + user.rows[0].id + ' AND input_date=' + 6;
+        const getWeight = await conn.query(getWeightQuery);
+        if (!getWeight) return response.error("Error while updating all weights data", 400, res);
+
+        const updateQuery = 'UPDATE weights SET weight=' + getWeight.rows[0].weight + ' WHERE id_user=' + user.rows[0].id;
+        const updated = await conn.query(updateQuery);
+        if (!updated) return response.error("Error while updating all weights data", 400, res);
       }
       // if user is found and password is valid
       // create a token

@@ -1,33 +1,46 @@
 import React, { Component } from 'react';
 import { Col, Row, Table } from 'react-bootstrap';
+const url ="https://obesite-server.herokuapp.com/api"
+// const url ="http://localhost:5000/api"
+
 class UserLog extends Component {
-    state = {  }
+    state = { 
+        data: []
+     }
     componentDidMount = () => {
         document.title = "User Log"
+        this.fetchData()
+    }
+    fetchData() {
+        const token = localStorage.getItem('token');
+        const requestOptions = {
+            method: 'GET',
+            headers: { 
+                'Content-Type': 'application/json',
+                'x-access-token': token
+            },
+        } 
+        fetch(url + '/user/all', requestOptions)
+            .then(response => response.json())
+            .then(item => {
+                if (item.status === 200) {
+                    this.setState({
+                        ...this.state,
+                        data: item.values
+                    });
+                    console.log(item.values);
+                }
+            })
+            .catch(err => {
+                console.log(err)
+            });
+
+        this.setState({
+            ...this.state,
+            isLoading:false
+        })
     }
     render() { 
-        const data = [
-            {
-                username : "feliciagojali",
-                count : 12
-            },
-            {
-                username : "annisaayu",
-                count : 20
-            },
-            {
-                username : "floren",
-                count : 12
-            },
-            {
-                email : "gojalif@gmail.com",
-                count : 10
-            },
-            {
-                email : "yaya@email.com",
-                count : 22
-            }
-        ]
         return ( 
             <>
             <div style={{color:"black", padding:"50px"}}>
@@ -44,12 +57,12 @@ class UserLog extends Component {
                         </tr>
                     </thead>
                     <tbody>
-                        {data.map((item,i) => (
+                        {this.state.data.map((item,i) => (
                             <tr>
                                 <td> {i+1} </td>
                                 <td> {(item.username ? item.username : '-' )}</td>
                                 <td> {(item.email ? item.email : '-' )}</td>
-                                <td> {item.count} </td>
+                                <td> {item.log_count} </td>
 
                             </tr>
                         ))}

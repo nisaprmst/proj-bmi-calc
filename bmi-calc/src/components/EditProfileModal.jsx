@@ -3,8 +3,8 @@ import { Modal, Button, Form, Col, Row, Spinner } from "react-bootstrap";
 import AvatarImage from "./AvatarImage";
 
 import Swal from "sweetalert2";
-// const url ="https://obesite-server.herokuapp.com/api"
-const url ="http://localhost:5000/api"
+const url ="https://obesite-server.herokuapp.com/api"
+// const url ="http://localhost:5000/api"
 
 export default function EditProfileModal(props) {
     
