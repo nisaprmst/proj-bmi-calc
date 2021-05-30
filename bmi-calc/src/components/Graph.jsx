@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import CanvasJSReact from '../lib/canvasjs/canvasjs.react';
-import { Loading } from './Loading';
-const url ="https://obesite-server.herokuapp.com/api"
-// const url ="http://localhost:5000/api"
+// const url ="https://obesite-server.herokuapp.com/api"
+const url ="http://localhost:5000/api"
 
 class Graph extends Component {
     state = { 
@@ -25,20 +24,12 @@ class Graph extends Component {
             .then(data => {
                 if (data.status === 200) {
                     this.setState({
-                       ...this.state,
                         dataPoints: data.values
                     });
-                    chart.render();
-                }else {
-                    this.setState({
-                        ...this.state,
-                        dataPoints: null
-                    })
                 }
-                
-                console.log(data);
+                chart.render();
             })
-
+            
         this.setState({
             ...this.state,
             isLoading:false
@@ -66,17 +57,9 @@ class Graph extends Component {
 		}
 		return (
 		<div>
-            {this.state.isLoading ? <Loading/> : this.state.dataPoints ?
 			<CanvasJSReact.CanvasJSChart options = {options} 
 				onRef={ref => this.chart = ref}
-			/> : 
-         
-            <div style={{
-                color : 'red',
-                backgroundColor:'white'
-            }}>
-                Ada yang salah! Coba lagi dalam beberapa saat!
-                </div>}
+			/>
 			{/*You can get reference to the chart instance as shown above using onRef. This allows you to access all chart properties and methods*/}
 		</div>
         );

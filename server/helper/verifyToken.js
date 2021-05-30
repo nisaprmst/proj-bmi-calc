@@ -10,11 +10,7 @@ function verifyToken(req, res, next) {
 
   // verifies secret and checks exp
   jwt.verify(token, config.secret, function (err, decoded) {
-    // console.log(" ");
-    console.log("secret", config.secret);
-    // console.log("token", token)
     if (err) {
-      console.log("err", err);
         return res
           .status(401)
           .send({ auth: false, message: "Failed to authenticate token." });
@@ -22,7 +18,6 @@ function verifyToken(req, res, next) {
 
     // if everything is good, save to request for use in other routes
     req.userId = decoded.id;
-    console.log("decoded", decoded);
     const query = 'SELECT * FROM users WHERE username=\'' + decoded.username + '\'';
     conn.query(query, (err, result) => {
         if (err) {

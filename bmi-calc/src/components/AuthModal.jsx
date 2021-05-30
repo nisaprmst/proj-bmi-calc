@@ -3,8 +3,8 @@ import { Modal, Button, Form, Col, Row, Spinner } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 import Swal from "sweetalert2";
 import { GoogleLogin } from 'react-google-login';
-const url ="https://obesite-server.herokuapp.com/api";
-// const url ="http://localhost:5000/api"
+// const url ="https://obesite-server.herokuapp.com/api";
+const url ="http://localhost:5000/api"
 const signup = {
     username: '',
     password: '',
@@ -106,7 +106,7 @@ export default function AuthModal(props) {
             body: JSON.stringify({ 
                 username: newUser.username,
                 password: newUser.password,
-                nama: newUser.namalengkap,
+                name: newUser.namalengkap,
                 email: newUser.email,
                 birth_date: newUser.tanggallahir,
                 height: newUser.tinggi,
@@ -192,17 +192,10 @@ export default function AuthModal(props) {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ 
-                username: newUser.username,
-                password: newUser.password,
-                nama: newUser.namalengkap,
-                email: newUser.email,
-                birth_date: newUser.tanggallahir,
-                height: newUser.tinggi,
-                weight: newUser.berat
+              token: e.tokenId,
+              accessToken: e.accessToken
             })
           } 
-          // TODO: check if email has been used
-          // emailnya blm ada juga
           fetch(url + '/auth/register', requestOptions)
                   .then(response => response.json())
                   .then(res => {
@@ -247,10 +240,11 @@ export default function AuthModal(props) {
     <GoogleLogin
     className="google-button"
     clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
-    buttonText="Log in with Google"
+    buttonText="Continue with Google"
     onSuccess={handleGoogleSubmit}
     onFailure={handleGoogleError}
     cookiePolicy={'single_host_origin'}
+    scope='https://www.googleapis.com/auth/user.birthday.read https://www.googleapis.com/auth/profile.agerange.read'
     />
     </div>
   );

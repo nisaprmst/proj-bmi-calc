@@ -6,8 +6,8 @@ import { stateToHTML } from 'draft-js-export-html';
 import { Form, Col, Row, Spinner } from 'react-bootstrap';
 import Swal from 'sweetalert2';
 
-const url ="https://obesite-server.herokuapp.com/api"
-// const url ="http://localhost:5000/api"
+// const url ="https://obesite-server.herokuapp.com/api"
+const url ="http://localhost:5000/api"
 
 
 class CMS extends Component {

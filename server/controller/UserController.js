@@ -52,13 +52,12 @@ router.put(
             if (!updated) return response.error("weight or height not valid", 400, res);
 
             const input_date = getDateTime.getDayNumber();
-            const weightQUery = 'INSERT INTO weights (input_date, weight, id_user) VALUES (' + input_date + ',' + req.body.weight + ',' + req.user.id + ')'
+            const weightQUery = 'UPDATE weights SET weight=' + req.body.weight+  'WHERE id_user=' + req.user.id + 'AND input_date>=' + input_date;
             const addWeight = await conn.query(weightQUery);
             if (!addWeight) return response.error("Error adding weight record", 400, res);
 
             return response.ok('Success update user weight and height', res);
         } catch (error) {
-            console.log(error)
             return response.error("Error while updating profil", 400, res);
         }
     }
@@ -68,7 +67,6 @@ router.put(
     '/change-password',
     VerifyToken,
     function(req, res) {
-        console.log(req.body.newPassword);
         try {
             const hashedPassword = bcrypt.hashSync(req.body.newPassword, 8);
             const query = 'UPDATE users SET password=\'' + hashedPassword + '\'' + ' WHERE username=\'' + req.user.username + '\'';

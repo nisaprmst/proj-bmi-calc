@@ -4,8 +4,8 @@ import AvatarImage from '../components/AvatarImage';
 import EditProfileModal from '../components/EditProfileModal';
 import Graph from '../components/Graph';
 import Field from '../components/Field';
-const url ="https://obesite-server.herokuapp.com/api"
-// const url ="http://localhost:5000/api"
+// const url ="https://obesite-server.herokuapp.com/api"
+const url ="http://localhost:5000/api"
 
 class Profile extends Component {
     constructor(props) {
@@ -38,13 +38,12 @@ class Profile extends Component {
             .then(response => response.json())
             .then(item => {
                 if (item.status === 200) {
-                    console.log(item.values)
                     this.setState({
                         ...this.state,
                         show: false,
                         tinggi : item.values.height,
                         berat : item.values.weight,
-                        name : item.values.username,
+                        name : item.values.name,
                         isUser : item.values.role === "USER",
                         isLoading : false
                     });
@@ -75,7 +74,6 @@ class Profile extends Component {
                   .then(response => response.json())
                   .then(res => {
                     localStorage.setItem('token', res.values.token);
-                    console.log(res.values.token);
                     window.location.reload();
                   })
                   .then();
